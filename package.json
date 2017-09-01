@@ -1,0 +1,7 @@
+{
+  "name": "holistic-sample",
+  "version": "1.0.0",
+  "description": "Desired output of the holistic js scaffolding",
+  "main": "index.js",
+  "license": "MIT"
+}

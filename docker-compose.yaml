@@ -1,0 +1,26 @@
+version: '2'
+services:
+  things:
+    build:
+      context: ./services/things
+      dockerfile: Dockerfile
+    volumes:
+      - ./services/things/src:/app/src
+    ports:
+      - '3000:3000'
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    volumes:
+      - ./gateway/src:/app/src
+    ports:
+      - '4000:4000'
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    volumes:
+      - ./web/src:/app/src
+    ports:
+      - '8080:8080'
