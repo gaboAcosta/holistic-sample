@@ -1,4 +1,4 @@
-#HolisticJS sample output
+# HolisticJS sample output #
 
 The only dependency for the host (there are internal dependencies) is:
 
