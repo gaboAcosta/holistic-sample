@@ -65,7 +65,7 @@ server.register(plugins, (errorRegister) => {
             .client({
                 type: 'http',
                 host: 'things',
-                port: 3000,
+                port: 8000,
                 pin: 'src:things',
             })
 
