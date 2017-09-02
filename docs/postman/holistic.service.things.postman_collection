@@ -1,0 +1,91 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Holistic - Things Service",
+		"_postman_id": "ad231a7a-c124-dd98-0a39-97e2f4939e92",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Update Things",
+			"request": {
+				"url": "http://localhost:8000/act",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"src\": \"things\",\n\t\"cmd\": \"update\",\n\t\"id\": \"59a9fd0243db8e01b3436741\",\n\t\"name\": \"Lisa\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Things",
+			"request": {
+				"url": "http://localhost:8000/act",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"src\": \"things\",\n\t\"cmd\": \"delete\",\n\t\"id\": \"59a9fd0243db8e01b3436741\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add Things",
+			"request": {
+				"url": "http://localhost:8000/act",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"src\": \"things\",\n\t\"cmd\": \"add\",\n\t\"name\": \"Gabo\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "List Things",
+			"request": {
+				"url": "http://localhost:8000/act",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"src\": \"things\",\n\t\"cmd\": \"list\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

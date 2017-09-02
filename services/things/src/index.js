@@ -2,12 +2,13 @@ const Hapi = require('hapi')
 const Chairo = require('chairo')
 const Good = require('good')
 const _ = require('lodash')
-
+const db = require('./config/db')
 const server = new Hapi.Server()
 
 server.connection({ port: 3000, host: 'localhost' })
 
 const mainPlugins = [
+    db,
     {
         register: Good,
         options: {
