@@ -8,10 +8,7 @@ const addThingsMethod = {
             name: { required$: true },
         }, (message, done) => {
             const { name } = message
-            const thing = new server.db.Things({
-                name,
-            })
-            thing.save(done)
+            server.db.Things.create({ name }, done)
         })
 
         next()
