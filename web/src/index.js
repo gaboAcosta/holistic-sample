@@ -1,16 +1,16 @@
 
 import React from 'react'
 import ReactDom from 'react-dom'
-import Main from './components/Main.jsx'
+import App from './components/main/App.js'
 
-class App extends React.Component {
+class Index extends React.Component {
     render() {
         return (
             <div>
-                <Main/>
+                <App/>
             </div>
         )
     }
 }
 
-ReactDom.render(<App/>, document.getElementById('app'))
+ReactDom.render(<Index/>, document.getElementById('app'))
