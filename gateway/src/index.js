@@ -4,7 +4,7 @@ const Good = require('good')
 const _ = require('lodash')
 const server = new Hapi.Server()
 const Hoek = require('hoek');
-const mainViewConfig = require('./config/mainView')
+const mainViewConfig = require('./setup/mainView')
 
 server.connection({
     host: '0.0.0.0',
@@ -57,7 +57,7 @@ const mainPlugins = [
     },
 ]
 
-const appPlugins = require('./config/plugins.js')
+const appPlugins = require('./setup/plugins.js')
 const plugins = _.concat(mainPlugins, appPlugins)
 
 server.register(require('vision'), (err) => {
