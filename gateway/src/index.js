@@ -64,9 +64,9 @@ server.register(plugins, (errorRegister) => {
         server.seneca
             .client({
                 type: 'http',
-                host: 'things',
+                host: 'main',
                 port: 8000,
-                pin: 'src:things',
+                pin: 'src:main',
             })
 
         server.log(['info'], `Seneca client running at: ${server.info.host}`)

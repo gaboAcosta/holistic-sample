@@ -1,0 +1,82 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Holistic - Gateway",
+		"_postman_id": "d3dfeee7-b0f7-def0-980a-a06df81f5142",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List Things",
+			"request": {
+				"url": "http://localhost:4000/api/things",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Things",
+			"request": {
+				"url": "http://localhost:4000/api/things/59aa00a4de1ce10262dfef3b",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Gabooswqe\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update Things",
+			"request": {
+				"url": "http://localhost:4000/api/things/59aa00a4de1ce10262dfef3b",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Gabooswqe\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create Things",
+			"request": {
+				"url": "http://localhost:4000/api/things",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Gabooswqe\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

@@ -1,4 +1,4 @@
-#HolisticJS sample output
+# HolisticJS sample output #
 
 The only dependency for the host (there are internal dependencies) is:
 
@@ -14,3 +14,8 @@ If you add dependencies or change the package.json of any of the sub projects yo
 
 This is because dependencies get installed only on build, also the package.json, webpack.config.js and others
 are copied at build time (look inside Dockerfile, anything there is on build time only)
+
+
+
+## License
+Copyright Gabriel Acosta and other contributors 2017, Licensed under [MIT][].

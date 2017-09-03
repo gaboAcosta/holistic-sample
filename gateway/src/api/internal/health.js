@@ -8,7 +8,7 @@ const healthRoute = {
                 // Invoke a Seneca action using the request decoration
 
                 request.seneca.act({
-                    src: 'things',
+                    src: 'main',
                     cmd: 'healthCheck',
                 }, (err, result) => {
 

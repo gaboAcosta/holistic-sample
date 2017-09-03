@@ -1,13 +1,13 @@
 version: '2'
 services:
-  things:
+  main:
     build:
-      context: ./services/things
+      context: ./services/main
       dockerfile: Dockerfile
     volumes:
-      - ./services/things/src:/app/src
+      - ./services/main/src:/app/src
     ports:
-      - '3000:3000'
+      - '8000:8000'
   gateway:
     build:
       context: ./gateway
@@ -24,3 +24,14 @@ services:
       - ./web/src:/app/src
     ports:
       - '8080:8080'
+  mongo:
+    image: mongo:2.6.12
+    volumes:
+      - mongo:/data/db
+    ports:
+      - '27017:27017'
+
+volumes:
+  mongo:
+    external: true
+

@@ -1,0 +1,12 @@
+version: '2'
+services:
+  main:
+    command: 'dev'
+    ports:
+      - '9230:9230'
+  gateway:
+    command: 'dev'
+    ports:
+      - '9231:9231'
+  web:
+    command: 'dev'
