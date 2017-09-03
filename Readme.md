@@ -10,5 +10,11 @@ To run de project:
 
 If you add dependencies or change the package.json of any of the sub projects you need to stop and run the containers again so they are built again, this is because dependencies get installed only on build, also the package.json, webpack.config.js and others are copied at build time (look inside Dockerfile, anything there is on build time only)
 
+To test the project:
+
+Open a browser:
+
+`http://localhost:4000/`
+
 ## License
 Copyright Gabriel Acosta and other contributors 2017, Licensed under [MIT][].
