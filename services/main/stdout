@@ -1,0 +1,22 @@
+
+  
+  [31mx[0m[31mx[0m
+
+Failed tests:
+
+  1) Internal services tests The health service responds:
+
+      [31mTimed out (2000ms) - Internal services tests The health service responds[0m
+
+
+  2) Add Things method adds a thing to the db:
+
+      [31mTimed out (2000ms) - Add Things method adds a thing to the db[0m
+
+
+
+[31m2 of 2 tests failed[0m
+Test duration: 4266 ms
+Assertions count: 2 (verbosity: 1.00)
+[32mNo global variable leaks detected[0m
+

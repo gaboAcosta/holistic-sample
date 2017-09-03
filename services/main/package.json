@@ -20,6 +20,11 @@
   },
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon --inspect=0.0.0.0:9230 -w ./src index.js"
+    "dev": "nodemon --inspect=0.0.0.0:9230 -w ./src index.js",
+    "test": "NODE_ENV=test lab -P 'spec' src"
+  },
+  "devDependencies": {
+    "code": "^4.1.0",
+    "lab": "^14.2.2"
   }
 }
