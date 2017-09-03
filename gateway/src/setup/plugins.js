@@ -2,18 +2,15 @@ const Glob = require('glob')
 
 const plugins = []
 
-Glob.sync('../api/**/!(*.test.js)', {
+Glob.sync('../api/**/!(*.spec.js)', {
     realpath: true,
     cwd: __dirname,
 })
     .filter((file) => {
-
         return /\.js/.test(file)
-
     })
     .forEach((file) => {
-        console.log(file)
-        plugins.push(require(file)) // eslint-disable-line global-require
+        plugins.push(require(file))
     })
 
 module.exports = plugins
