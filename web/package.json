@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --progress --colors"
+    "dev": "webpack-dev-server --progress --colors",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",

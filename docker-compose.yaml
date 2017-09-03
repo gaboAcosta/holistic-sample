@@ -8,6 +8,8 @@ services:
       - ./services/main/src:/app/src
     ports:
       - '8000:8000'
+    depends_on:
+      - mongo
   gateway:
     build:
       context: ./gateway
@@ -16,6 +18,8 @@ services:
       - ./gateway/src:/app/src
     ports:
       - '4000:4000'
+    depends_on:
+      - mongo
   web:
     build:
       context: ./web

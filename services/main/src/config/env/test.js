@@ -1,7 +1,7 @@
 
 module.exports = {
     mongo:{
-        host: 'mongodb://localhost',
+        host: 'mongodb://mongo',
         db: 'holistic-test',
         options: {
             useMongoClient: true,

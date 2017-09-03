@@ -5,6 +5,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "docker-compose -f docker-compose.yaml -f docker-compose.local.yaml up --build"
+    "dev": "docker-compose -f docker-compose.yaml -f docker-compose.local.yaml up --build",
+    "test:main": "docker-compose run main test",
+    "test:web": "docker-compose run web test"
   }
 }
