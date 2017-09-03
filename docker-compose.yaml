@@ -1,11 +1,11 @@
 version: '2'
 services:
-  things:
+  main:
     build:
-      context: ./services/things
+      context: ./services/main
       dockerfile: Dockerfile
     volumes:
-      - ./services/things/src:/app/src
+      - ./services/main/src:/app/src
     ports:
       - '8000:8000'
   gateway:

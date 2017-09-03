@@ -1,5 +1,5 @@
 {
-  "name": "holistic-things-service",
+  "name": "holistic-main-service",
   "version": "1.0.0",
   "description": "Sample service for the holistic framework",
   "main": "index.js",
@@ -19,6 +19,7 @@
     "nodemon": "^1.11.0"
   },
   "scripts": {
-    "start": "nodemon -w ./src index.js"
+    "start": "node index.js",
+    "dev": "nodemon --inspect=0.0.0.0:9230 -w ./src index.js"
   }
 }

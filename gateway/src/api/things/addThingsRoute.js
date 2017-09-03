@@ -1,21 +1,19 @@
 const Joi = require('joi')
 
-const updateThingsRoute = {
+const addThingsRoute = {
     register: function (server, options, next) {
         server.route({
-            method: 'PUT',
-            path: '/api/things/{id}',
+            method: 'POST',
+            path: '/api/things',
             config: {
                 handler: function (request, reply) {
                     // Invoke a Seneca action using the request decoration
 
-                    const { id } = request.params
                     const { name } = request.payload
 
                     request.seneca.act({
                         src: 'main',
-                        cmd: 'updateThings',
-                        id,
+                        cmd: 'addThings',
                         name,
                     }, (err, result) => {
 
@@ -37,9 +35,6 @@ const updateThingsRoute = {
                     }),
                 },
                 validate: {
-                    params: {
-                        id: Joi.string().required()
-                    },
                     payload: Joi.object().keys({
                         name: Joi.string().required(),
                     }),
@@ -52,9 +47,9 @@ const updateThingsRoute = {
     },
 };
 
-updateThingsRoute.register.attributes = {
-    name: 'updateThingsRoute',
+addThingsRoute.register.attributes = {
+    name: 'addThingsRoute',
     version: '1.0.0'
 };
 
-module.exports = updateThingsRoute
+module.exports = addThingsRoute

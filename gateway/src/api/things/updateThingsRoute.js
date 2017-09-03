@@ -1,17 +1,22 @@
 const Joi = require('joi')
 
-const listThingsRoute = {
+const updateThingsRoute = {
     register: function (server, options, next) {
         server.route({
-            method: 'GET',
-            path: '/api/things',
+            method: 'PUT',
+            path: '/api/things/{id}',
             config: {
                 handler: function (request, reply) {
                     // Invoke a Seneca action using the request decoration
 
+                    const { id } = request.params
+                    const { name } = request.payload
+
                     request.seneca.act({
                         src: 'main',
-                        cmd: 'listThings',
+                        cmd: 'updateThings',
+                        id,
+                        name,
                     }, (err, result) => {
 
                         if (err) {
@@ -26,44 +31,30 @@ const listThingsRoute = {
                     options: {
                         stripUnknown: true,
                     },
-                    schema: Joi.array().items(Joi.object().keys({
+                    schema: Joi.object().keys({
                         _id: Joi.string().required(),
                         name: Joi.string().required(),
-                    })),
+                    }),
                 },
+                validate: {
+                    params: {
+                        id: Joi.string().required()
+                    },
+                    payload: Joi.object().keys({
+                        name: Joi.string().required(),
+                    }),
+                }
             }
 
 
         });
         next();
     },
-
-
-    // validate: {
-    //     options: {
-    //         abortEarly: false,
-    //     },
-    //     payload: Joi.object().keys({
-    //         products: Joi.array().items(Joi.object().keys({
-    //             id: Joi.string().required(),
-    //             name: Joi.string().required(),
-    //             description: Joi.string().required(),
-    //             url: Joi.string().required(),
-    //             image: Joi.string().required(),
-    //             currency: Joi.string().required(),
-    //             currentPrice: Joi.number().required(),
-    //             category: Joi.string().required(),
-    //             expirationDate: Joi.string().allow(null).allow(''),
-    //             stockAvailability: Joi.string().allow(null).allow(''),
-    //             added: Joi.boolean().allow(null),
-    //         })).required(),
-    //     }),
-    // },
 };
 
-listThingsRoute.register.attributes = {
-    name: 'addThingsRoute',
+updateThingsRoute.register.attributes = {
+    name: 'updateThingsRoute',
     version: '1.0.0'
 };
 
-module.exports = listThingsRoute
+module.exports = updateThingsRoute

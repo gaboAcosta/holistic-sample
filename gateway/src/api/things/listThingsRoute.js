@@ -1,20 +1,17 @@
 const Joi = require('joi')
 
-const deleteThingsRoute = {
+const listThingsRoute = {
     register: function (server, options, next) {
         server.route({
-            method: 'DELETE',
-            path: '/api/things/{id}',
+            method: 'GET',
+            path: '/api/things',
             config: {
                 handler: function (request, reply) {
                     // Invoke a Seneca action using the request decoration
 
-                    const { id } = request.params
-
                     request.seneca.act({
                         src: 'main',
-                        cmd: 'deleteThings',
-                        id,
+                        cmd: 'listThings',
                     }, (err, result) => {
 
                         if (err) {
@@ -29,16 +26,11 @@ const deleteThingsRoute = {
                     options: {
                         stripUnknown: true,
                     },
-                    schema: Joi.object().keys({
-                        ok: Joi.number().required(),
-                        n: Joi.number().required(),
-                    }),
+                    schema: Joi.array().items(Joi.object().keys({
+                        _id: Joi.string().required(),
+                        name: Joi.string().required(),
+                    })),
                 },
-                validate: {
-                    params: {
-                        id: Joi.string().required()
-                    },
-                }
             }
 
 
@@ -47,9 +39,9 @@ const deleteThingsRoute = {
     },
 };
 
-deleteThingsRoute.register.attributes = {
-    name: 'deleteThingsRoute',
+listThingsRoute.register.attributes = {
+    name: 'listThingsRoute',
     version: '1.0.0'
 };
 
-module.exports = deleteThingsRoute
+module.exports = listThingsRoute

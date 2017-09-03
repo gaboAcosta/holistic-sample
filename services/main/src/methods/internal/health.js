@@ -3,10 +3,10 @@ const healthMethod = {
     register: function (server, options, next) {
         server.dependency('chairo')
         server.seneca.add({
-            src: 'things',
+            src: 'main',
             cmd: 'healthCheck',
         }, (message, done) => {
-            return done(null, { response: 'Everything fine in things!!!!' })
+            return done(null, { response: 'Everything fine in the main service!' })
         })
 
         next()

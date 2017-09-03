@@ -56,7 +56,7 @@ server.register(plugins, (errorRegister) => {
         server.seneca.listen({
             type: 'http',
             port: 8000,
-            pin: 'things',
+            pin: 'main',
             timeout: 5000,
         })
 

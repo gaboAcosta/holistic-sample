@@ -12,9 +12,11 @@
     "good-console": "^6.4.0",
     "good-squeeze": "^5.0.2",
     "hapi": "^16.5.2",
+    "joi": "^10.6.0",
     "nodemon": "^1.11.0"
   },
   "scripts": {
-    "start": "nodemon -w ./src index.js"
+    "start": "node index.js",
+    "dev": "nodemon --inspect=0.0.0.0:9231 -w ./src index.js"
   }
 }
