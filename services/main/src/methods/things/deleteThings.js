@@ -3,8 +3,8 @@ const deleteThingsMethod = {
     register: (server, options, next) => {
         server.dependency('chairo')
         server.seneca.add({
-            src: 'things',
-            cmd: 'delete',
+            src: 'main',
+            cmd: 'deleteThings',
             id: { required$: true },
         }, (message, done) => {
             const { id } = message

@@ -3,8 +3,8 @@ const listThingsMethod = {
     register: (server, options, next) => {
         server.dependency('chairo')
         server.seneca.add({
-            src: 'things',
-            cmd: 'list',
+            src: 'main',
+            cmd: 'listThings',
         }, (message, done) => {
            server.db.Things.find({}, done)
         })

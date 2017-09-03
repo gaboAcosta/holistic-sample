@@ -3,8 +3,8 @@ const addThingsMethod = {
     register: (server, options, next) => {
         server.dependency('chairo')
         server.seneca.add({
-            src: 'things',
-            cmd: 'add',
+            src: 'main',
+            cmd: 'addThings',
             name: { required$: true },
         }, (message, done) => {
             const { name } = message
