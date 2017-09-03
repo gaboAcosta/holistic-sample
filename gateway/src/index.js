@@ -3,6 +3,8 @@ const Chairo = require('chairo')
 const Good = require('good')
 const _ = require('lodash')
 const server = new Hapi.Server()
+const Hoek = require('hoek');
+const mainViewConfig = require('./config/mainView')
 
 server.connection({
     host: '0.0.0.0',
@@ -11,10 +13,16 @@ server.connection({
         timeout: {
             server: 3000, // 3 seconds is a lot of time
         },
+        validate: {
+            options: {
+                stripUnknown: true
+            }
+        }
     }
 })
 
 const mainPlugins = [
+    mainViewConfig,
     {
         register: Good,
         options: {
@@ -52,6 +60,19 @@ const mainPlugins = [
 const appPlugins = require('./config/plugins.js')
 const plugins = _.concat(mainPlugins, appPlugins)
 
+server.register(require('vision'), (err) => {
+
+    Hoek.assert(!err, err);
+
+    server.views({
+        engines: {
+            html: require('handlebars')
+        },
+        relativeTo: __dirname,
+        path: 'views'
+    });
+
+});
 
 server.register(plugins, (errorRegister) => {
 
