@@ -1,11 +1,16 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose')
 const Glob = require('glob')
 const path = require('path')
+const config = require('../config')
+mongoose.Promise = global.Promise
 
 const dbSetup = {
     register: (server, options, next) => {
+        const mongoURI = `${config.mongo.host}/${config.mongo.db}`
+        const mongoOptions = config.mongo.options || {}
 
-        mongoose.connect('mongodb://mongo/test')
+        mongoose.connect(mongoURI, mongoOptions)
+
         const db = {}
 
         Glob.sync('../db/schemas/**/*.js', {

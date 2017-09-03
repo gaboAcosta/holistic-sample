@@ -2,7 +2,7 @@ const Hapi = require('hapi')
 const Chairo = require('chairo')
 const Good = require('good')
 const _ = require('lodash')
-const db = require('./config/db')
+const db = require('./setup/db')
 const server = new Hapi.Server()
 
 server.connection({ port: 3000, host: 'localhost' })
@@ -37,14 +37,11 @@ const mainPlugins = [
     },
     {
         register: Chairo,
-        options: {
-            log: 'info+,type:act',
-        },
     },
 ]
 
 // App Plugins
-const appPlugins = require('./config/plugins.js')
+const appPlugins = require('./setup/plugins.js')
 const plugins = _.concat(mainPlugins, appPlugins)
 
 server.register(plugins, (errorRegister) => {
