@@ -4,14 +4,9 @@ const mongoose = require('mongoose')
 class DatabaseHelper {
 
     static dropCollection(collection){
-        return new Promise((resolve, reject) => {
-            collection.drop((err) => {
-                if(err){
-                    reject(err)
-                } else {
-                    resolve(err)
-                }
-
+        return new Promise((resolve) => {
+            collection.drop(() => {
+                resolve()
             })
         })
     }
