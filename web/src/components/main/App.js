@@ -6,9 +6,9 @@ import Body from './Body'
 export default class App extends Component {
 
     render() {
-
         return (
-            <div>
+            // the main app content for e2e tests
+            <div id="holistic">
                 <TopBar />
                 <Body/>
                 <Footer/>

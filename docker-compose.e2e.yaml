@@ -26,14 +26,12 @@ services:
   web:
     build:
       context: ./web
-      dockerfile: Dockerfile_dev
-    volumes:
-      - ./web/src:/app/src
+      dockerfile: Dockerfile
     depends_on:
       - gateway
-    main:
-      environment:
-        - NODE_ENV=e2e
-    gateway:
-      environment:
-        - NODE_ENV=e2e
+  main:
+    environment:
+      - NODE_ENV=test
+  gateway:
+    environment:
+      - NODE_ENV=test

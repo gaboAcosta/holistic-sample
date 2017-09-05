@@ -9,8 +9,9 @@
     "dev:down": "docker-compose -f docker-compose.yaml -f docker-compose.local.yaml down",
     "test:main": "docker-compose run main test",
     "test:web": "docker-compose run web test",
-    "e2e": "docker-compose -f docker-compose.yaml -f docker-compose.e2e.yaml run --rm nightwatch",
-    "e2e:up": "docker-compose -f docker-compose.yaml -f docker-compose.e2e.yaml up --build",
-    "e2e:build": "docker-compose -f docker-compose.yaml -f docker-compose.e2e.yaml build --no-cache nightwatch"
+    "e2e": "yarn e2e:build && yarn e2e:run",
+    "e2e:run": "docker-compose -f docker-compose.yaml -f docker-compose.e2e.yaml run --rm nightwatch",
+    "e2e:build": "docker-compose -f docker-compose.yaml -f docker-compose.e2e.yaml build",
+    "e2e:down": "docker-compose -f docker-compose.yaml -f docker-compose.e2e.yaml down"
   }
 }
