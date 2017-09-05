@@ -1,13 +1,23 @@
 version: '2'
 services:
   main:
+    build:
+      context: ../services/main
+      dockerfile: Dockerfile_dev
     command: 'dev'
     ports:
       - '9230:9230'
+    volumes:
+      - ../services/main:/app
   gateway:
+    build:
+      context: ../gateway
+      dockerfile: Dockerfile_dev
     command: 'dev'
     ports:
       - '9231:9231'
+    volumes:
+      - ../gateway:/app
   web:
     build:
       context: ../web

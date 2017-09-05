@@ -4,22 +4,27 @@ const healthRoute = {
         server.route({
             method: 'GET',
             path: '/api/health',
-            handler: function (request, reply) {
-                // Invoke a Seneca action using the request decoration
+            config: {
+                tags: ['api'],
+                description: 'Main',
+                notes: 'Returns a health message',
+                handler: function (request, reply) {
+                    // Invoke a Seneca action using the request decoration
 
-                request.seneca.act({
-                    src: 'main',
-                    cmd: 'healthCheck',
-                }, (err, result) => {
+                    request.seneca.act({
+                        src: 'main',
+                        cmd: 'healthCheck',
+                    }, (err, result) => {
 
-                    if (err) {
-                        return reply(err);
-                    }
+                        if (err) {
+                            return reply(err);
+                        }
 
-                    const { response } = result
+                        const { response } = result
 
-                    return reply({ message: response });
-                });
+                        return reply({ message: response });
+                    });
+                }
             }
         });
         next();

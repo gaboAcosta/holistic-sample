@@ -15,7 +15,9 @@
     "chalk": "^2.1.0",
     "gulp": "^3.9.1",
     "gulp-import-tasks": "^0.1.1",
+    "gulp-prompt": "^0.2.0",
     "gulp-util": "^3.0.8",
+    "inquirer": "^3.2.3",
     "yargs": "^8.0.2"
   }
 }

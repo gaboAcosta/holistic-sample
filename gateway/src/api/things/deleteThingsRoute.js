@@ -6,6 +6,9 @@ const deleteThingsRoute = {
             method: 'DELETE',
             path: '/api/things/{id}',
             config: {
+                tags: ['api'],
+                description: 'Deletes Things',
+                notes: 'Deletes things',
                 handler: function (request, reply) {
                     // Invoke a Seneca action using the request decoration
 
