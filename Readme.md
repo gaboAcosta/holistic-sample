@@ -24,5 +24,7 @@ Please keep in mind, this will leave all the dependencies for e2e running, so ma
 
 `yarn e2e:down`
 
+The test run will produce videos on `/e2e/src/videos`
+
 ## License
 Copyright Gabriel Acosta and other contributors 2017, Licensed under [MIT][].
