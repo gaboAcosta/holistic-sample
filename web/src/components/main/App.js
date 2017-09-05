@@ -10,7 +10,9 @@ export default class App extends Component {
             // the main app content for e2e tests
             <div id="holistic">
                 <TopBar />
-                <Body/>
+                <Body>
+                    {this.props.children}
+                </Body>
                 <Footer/>
             </div>
         )

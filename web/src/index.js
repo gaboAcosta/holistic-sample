@@ -1,14 +1,18 @@
 
 import React from 'react'
 import ReactDom from 'react-dom'
-import App from './components/main/App.js'
- 
+import RouterSetup from './components/main/RouterSetup'
+import { Provider } from 'mobx-react'
+import GetStores from './models'
+
+const stores = GetStores()
+
 class Index extends React.Component {
     render() {
         return (
-            <div>
-                <App/>
-            </div>
+            <Provider {...stores}>
+                <RouterSetup />
+            </Provider>
         )
     }
 }

@@ -1,20 +1,17 @@
 import React, { Component } from 'react'
 import { Icon, Table, Button, Modal } from 'semantic-ui-react'
-import { observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 
 import ThingsModal from './ThingsModal'
 import ThingsModalModel from '../../models/things/ThingsModalModel'
 
-
+@inject('ThingsListModel')
 @observer
 class ThingsList extends Component {
 
-    get store(){
-        return this.props.store
-    }
-
     constructor (props) {
         super(props)
+        this.store = new this.props.ThingsListModel()
     }
 
     componentDidMount () {
@@ -34,8 +31,6 @@ class ThingsList extends Component {
         const { target } = this.store.modal
         const { mode } = this.store.modal
         const title = `${mode} a thing!`
-        console.log('asking to open modal!')
-        console.log(open)
         if(open) {
             return this.renderModal(target, mode, title)
         }

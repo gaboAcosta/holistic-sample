@@ -8,7 +8,7 @@ const mainViewConfig = {
 
         server.route({
             method: 'GET',
-            path: '/',
+            path: '/{p*}',
             handler: function (request, reply) {
                 reply.view('index', { webClientURL })
             }
