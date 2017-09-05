@@ -5,13 +5,17 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev:up": "docker-compose -f docker-compose.yaml -f docker-compose.local.yaml up --build",
-    "dev:down": "docker-compose -f docker-compose.yaml -f docker-compose.local.yaml down",
-    "test:main": "docker-compose run main test",
-    "test:web": "docker-compose run web test",
-    "e2e": "yarn e2e:build && yarn e2e:run",
-    "e2e:run": "docker-compose -f docker-compose.yaml -f docker-compose.e2e.yaml run --rm nightwatch",
-    "e2e:build": "docker-compose -f docker-compose.yaml -f docker-compose.e2e.yaml build",
-    "e2e:down": "docker-compose -f docker-compose.yaml -f docker-compose.e2e.yaml down"
+    "dev": "gulp docker:up",
+    "dev:down": "gulp docker:down",
+    "dev:build": "gulp docker:up --build",
+    "test": "gulp docker:up --build --env test",
+    "test:down": "gulp docker:down"
+  },
+  "dependencies": {
+    "chalk": "^2.1.0",
+    "gulp": "^3.9.1",
+    "gulp-import-tasks": "^0.1.1",
+    "gulp-util": "^3.0.8",
+    "yargs": "^8.0.2"
   }
 }
