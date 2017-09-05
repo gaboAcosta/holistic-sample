@@ -8,14 +8,21 @@ To run de project:
 
 `yarn dev:up`
 
-If you add dependencies or change the package.json of any of the sub projects you need to run:
+If you add dependencies or change the package.json of any of the sub projects you need to stop and run the containers again so they are built again, this is because dependencies get installed only on build, also the package.json, webpack.config.js and others are copied at build time (look inside Dockerfile, anything there is on build time only)
 
-`docker-compose up --build`
+To test the project:
 
-This is because dependencies get installed only on build, also the package.json, webpack.config.js and others
-are copied at build time (look inside Dockerfile, anything there is on build time only)
+Open a browser:
 
+`http://localhost:4000/`
 
+To run e2e tests
+
+`yarn e2e`
+
+Please keep in mind, this will leave all the dependencies for e2e running, so make sure to run this after
+
+`yarn e2e:down`
 
 ## License
 Copyright Gabriel Acosta and other contributors 2017, Licensed under [MIT][].
