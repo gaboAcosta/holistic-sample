@@ -1,13 +1,5 @@
 import React, { Component } from 'react'
-import {
-    Container,
-    Header,
-    Segment,
-} from 'semantic-ui-react'
-// import ThingsModel from '../../models/things/ThingsListModel'
-// import ThingsList from '../things/ThingsList'
-//
-// const ThingsListStore = new ThingsModel()
+import { Container, Header, Segment } from 'semantic-ui-react'
 
 export default class body extends Component {
 
