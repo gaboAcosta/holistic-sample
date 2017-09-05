@@ -20,14 +20,7 @@ services:
       - '4000:4000'
     depends_on:
       - mongo
-  web:
-    build:
-      context: ./web
-      dockerfile: Dockerfile
-    volumes:
-      - ./web/src:/app/src
-    ports:
-      - '8080:8080'
+      - main
   mongo:
     image: mongo:2.6.12
     volumes:

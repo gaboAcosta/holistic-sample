@@ -1,0 +1,15 @@
+{
+  "name": "blueimp-nightwatch-example",
+  "private": true,
+  "version": "0.0.0",
+  "main": "globals.js",
+  "scripts": {
+    "display": "ffmpeg -video_size 1440x900 -r 15 -f x11grab -i chromedriver:60 -pix_fmt yuv420p -loglevel error /e2e/src/videos/globals-2017-09-04T19-39-08.mp4",
+    "test": "nightwatch src --c ./src/nightwatch.json --env default",
+    "test:verbose": "nightwatch --verbose src --c ./src/nightwatch.json --env default"
+  },
+  "dependencies": {
+    "nightwatch": "^0.9.16",
+    "nightwatch-video-recorder": "1.1.0"
+  }
+}

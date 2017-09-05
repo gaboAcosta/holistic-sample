@@ -9,4 +9,12 @@ services:
     ports:
       - '9231:9231'
   web:
-    command: 'dev'
+    build:
+      context: ./web
+      dockerfile: Dockerfile_dev
+    volumes:
+      - ./web/src:/app/src
+    ports:
+      - '8080:8080'
+    depends_on:
+      - gateway

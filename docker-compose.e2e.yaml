@@ -1,0 +1,38 @@
+version: '2'
+services:
+  chromedriver:
+    image: blueimp/chromedriver
+    environment:
+      - VNC_ENABLED=true
+      - VNC_PASSWORD=holistic
+      - EXPOSE_X11=true
+    ports:
+      - 5900:5900
+  nightwatch:
+    build:
+      context: ./e2e
+      dockerfile: Dockerfile
+    command: 'test:verbose'
+    depends_on:
+      - chromedriver
+      - web
+    environment:
+      - WAIT_FOR_HOSTS=gateway:4000 chromedriver:4444 chromedriver:6060
+    volumes:
+      - ./e2e/src:/e2e/src
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile_dev
+    volumes:
+      - ./web/src:/app/src
+    ports:
+      - '8080:8080'
+    depends_on:
+      - gateway
+    main:
+      environment:
+        - NODE_ENV=e2e
+    gateway:
+      environment:
+        - NODE_ENV=e2e

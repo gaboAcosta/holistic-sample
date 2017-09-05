@@ -1,0 +1,22 @@
+{
+  "globals_path": "src/globals.js",
+  "output_folder": false,
+  "src_folders": ["src/specs"],
+  "page_objects_path": "src/pages",
+  "test_settings": {
+    "default": {
+      "screenshots": {
+        "enabled": true,
+        "on_failure": true,
+        "path": "src/screenshots"
+      },
+      "videos": {
+        "enabled": true,
+        "delete_on_success": false,
+        "path": "/e2e/src/videos"
+      },
+      "launch_url": "http://gateway:4000",
+      "selenium_host": "chromedriver"
+    }
+  }
+}
