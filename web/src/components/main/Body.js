@@ -4,7 +4,10 @@ import {
     Header,
     Segment,
 } from 'semantic-ui-react'
+import ThingsModel from '../../models/things/ThingsListModel'
 import ThingsList from '../things/ThingsList'
+
+const ThingsListStore = new ThingsModel()
 
 export default class body extends Component {
 
@@ -22,7 +25,7 @@ export default class body extends Component {
                         </p>
                     </Container>
                     <Container text>
-                        <ThingsList/>
+                        <ThingsList store={ThingsListStore}/>
                     </Container>
                 </Segment>
             </div>
