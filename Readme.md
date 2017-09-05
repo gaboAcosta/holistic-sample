@@ -6,7 +6,7 @@ The only dependency for the host (there are internal dependencies) is:
 
 To run de project:
 
-`docker-compose up`
+`yarn dev:up`
 
 If you add dependencies or change the package.json of any of the sub projects you need to run:
 

@@ -1,11 +1,16 @@
 
+const config = require('../config')
+
 const mainViewConfig = {
     register: function (server, options, next) {
+
+        const { webClientURL } = config
+
         server.route({
             method: 'GET',
             path: '/',
             handler: function (request, reply) {
-                reply.view('index')
+                reply.view('index', { webClientURL })
             }
         });
         next();

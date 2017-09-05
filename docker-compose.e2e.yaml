@@ -20,14 +20,15 @@ services:
       - WAIT_FOR_HOSTS=gateway:4000 chromedriver:4444 chromedriver:6060
     volumes:
       - ./e2e/src:/e2e/src
+  gateway:
+    environment:
+      - NODE_ENV=test
   web:
     build:
       context: ./web
       dockerfile: Dockerfile_dev
     volumes:
       - ./web/src:/app/src
-    ports:
-      - '8080:8080'
     depends_on:
       - gateway
     main:
