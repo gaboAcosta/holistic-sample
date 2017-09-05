@@ -3,16 +3,12 @@ FROM node:8
 
 MAINTAINER Gabo Acosta <gabo@gaboacosta.com>
 
-WORKDIR /app
+WORKDIR /tmp
 
-COPY package.json yarn.lock index.html .babelrc ./
+COPY package.json yarn.lock ./
 RUN yarn install
 
-# we leave this alone so if we change something it's on it's own layer
-# and we don't have to do another yarn install
-COPY webpack.config.js ./
-
-EXPOSE 8080
+WORKDIR /app
 
 ENTRYPOINT ["yarn"]
 CMD ["dev"]

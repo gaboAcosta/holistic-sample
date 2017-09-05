@@ -1,115 +1,67 @@
 import React, { Component } from 'react'
 import { Icon, Table, Button, Modal } from 'semantic-ui-react'
-import ThingsModal from './ThingsModal'
-import ThingService from '../../services/ThingService'
+import { observer } from 'mobx-react'
 
-export default class ThingsList extends Component {
+import ThingsModal from './ThingsModal'
+import ThingsModalModel from '../../models/things/ThingsModalModel'
+
+
+@observer
+class ThingsList extends Component {
+
+    get store(){
+        return this.props.store
+    }
 
     constructor (props) {
         super(props)
-        this.state = {
-            things:[],
-            modal: {
-                open: false,
-            }
-        }
     }
 
     componentDidMount () {
         this.fetchThings()
     }
 
-    createThing (thing) {
-        ThingService.createThing(thing)
-        .then(() => {
-            this.setState({
-                modal: {
-                    open: false
-                }
-            })
-            return this.fetchThings()
-        })
-    }
-
-    updateThing (thing) {
-        ThingService.updateThing(thing)
-        .then(() => {
-            this.setState({
-                modal: {
-                    open: false
-                }
-            })
-            return this.fetchThings()
-        })
-    }
-
-    deleteThing (thing) {
-        ThingService.deleteThing(thing)
-        .then(() => {
-            this.setState({
-                modal: {
-                    open: false
-                }
-            })
-            return this.fetchThings()
-        })
-    }
-
     fetchThings () {
-        ThingService.fetchThings()
-        .then((response) => {
-            const things = response.body
-            this.setState({
-                things,
-            })
-        })
+        this.store.fetchThings()
     }
 
     openModal (mode, target) {
-        this.setState({
-            modal: {
-                open: true,
-                mode,
-                target,
-            }
-        })
+        this.store.openModal(mode, target)
     }
 
     displayModal () {
-        const { open } = this.state.modal
-        const { target } = this.state.modal
-        const { mode } = this.state.modal
+        const { open } = this.store.modal
+        const { target } = this.store.modal
+        const { mode } = this.store.modal
         const title = `${mode} a thing!`
-        const onCancel = () => { this.setState({modal:{open:false}}) }
+        console.log('asking to open modal!')
+        console.log(open)
         if(open) {
-            return (
-                <ThingsModal
-                    onComplete={(thing)=>{
-                        switch(mode){
-                            case 'create':
-                                this.createThing(thing)
-                                break;
-                            case 'update':
-                                this.updateThing(thing)
-                                break;
-                            case 'delete':
-                                this.deleteThing(thing)
-                                break;
-
-                        }
-                    }}
-                    onCancel={onCancel}
-                    target={target}
-                    mode={mode}
-                    title={title}
-                />
-            )
+            return this.renderModal(target, mode, title)
         }
+    }
+
+    renderModal(target, mode, title){
+        const store = new ThingsModalModel({
+            target: Object.assign({}, target),
+            mode,
+            title
+        })
+
+        return (
+            <ThingsModal
+                onClose={()=>{
+                    this.store.closeModal()
+                    this.fetchThings()
+                }}
+                store={store}
+            />
+        )
     }
 
     render () {
 
-        const { things } = this.state
+        const { things } = this.store
 
         return (
             <div>
@@ -161,7 +113,7 @@ export default class ThingsList extends Component {
                                         this.openModal('create', {name:''})
                                     }}
                                 >
-                                    <Icon name='add' /> Add Thing
+                                    <Icon name='add' /> Add Thing!
                                 </Button>
                             </Table.HeaderCell>
                         </Table.Row>
@@ -171,3 +123,5 @@ export default class ThingsList extends Component {
         )
     }
 }
+
+export default ThingsList
