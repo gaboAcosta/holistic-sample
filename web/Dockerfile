@@ -1,15 +1,18 @@
-FROM node:8
+
+FROM nginx:1.13.3
+
+MAINTAINER Gabo Acosta <gabo@gaboacosta.com>
+
+RUN apt-get update
+RUN apt-get install -y curl gnupg2
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs
+
+RUN npm install -g yarn
 
 WORKDIR /app
-
-COPY package.json yarn.lock index.html .babelrc ./
+COPY . ./
 RUN yarn install
+RUN yarn build
+RUN cp -r build/bundle.js /usr/share/nginx/html
 
-# we leave this alone so if we change something it's on it's own layer
-# and we don't have to do another yarn install
-COPY webpack.config.js ./
-
-EXPOSE 8080
-
-ENTRYPOINT ["yarn"]
-CMD ["start"]
