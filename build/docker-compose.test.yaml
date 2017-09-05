@@ -10,7 +10,7 @@ services:
       - 5900:5900
   nightwatch:
     build:
-      context: ./e2e
+      context: ../e2e
       dockerfile: Dockerfile
     command: 'test:verbose'
     depends_on:
@@ -19,13 +19,13 @@ services:
     environment:
       - WAIT_FOR_HOSTS=gateway:4000 chromedriver:4444 chromedriver:6060
     volumes:
-      - ./e2e/src:/e2e/src
+      - ../e2e/src:/e2e/src
   gateway:
     environment:
       - NODE_ENV=test
   web:
     build:
-      context: ./web
+      context: ../web
       dockerfile: Dockerfile
     depends_on:
       - gateway

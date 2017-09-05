@@ -23,4 +23,3 @@ COPY package.json ./
 RUN yarn install
 
 ENTRYPOINT ["yarn"]
-CMD ["test"]
