@@ -5,16 +5,6 @@ const gUtil = require('gulp-util');
 const chalk = require('chalk');
 
 const executeCommand = (commands=[], dockerFiles=[]) => {
-    //
-    const mainCompose = 'docker-compose.yaml'
-    const devCompose = 'docker-compose.local.yaml'
-    const e2eCompose = 'docker-compose.e2e.yaml'
-    //
-    // const command = argv.down ? 'down' : 'up';
-    //
-    // console.log('testing')
-    // console.log('testing')
-    // console.log(buildFolder)
 
     const buildFolder = path.join(__dirname, '../../')
 
