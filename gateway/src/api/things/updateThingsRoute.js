@@ -6,6 +6,9 @@ const updateThingsRoute = {
             method: 'PUT',
             path: '/api/things/{id}',
             config: {
+                tags: ['api'],
+                description: 'Update Things',
+                notes: 'Update things',
                 handler: function (request, reply) {
                     // Invoke a Seneca action using the request decoration
 

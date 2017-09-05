@@ -2,7 +2,7 @@ FROM node:8
 
 WORKDIR /app
 
-COPY package.json yarn.lock index.js ./
+COPY . ./
 RUN yarn install
 
 ENTRYPOINT ["yarn"]

@@ -6,6 +6,9 @@ const listThingsRoute = {
             method: 'GET',
             path: '/api/things',
             config: {
+                tags: ['api'],
+                description: 'List Things',
+                notes: 'List things',
                 handler: function (request, reply) {
                     // Invoke a Seneca action using the request decoration
 

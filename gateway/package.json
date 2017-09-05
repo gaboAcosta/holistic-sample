@@ -13,16 +13,18 @@
     "good-squeeze": "^5.0.2",
     "handlebars": "^4.0.10",
     "hapi": "^16.5.2",
+    "hapi-swagger": "^7.7.1",
     "hoek": "^4.2.0",
+    "inert": "^4.2.1",
     "joi": "^10.6.0",
-    "nodemon": "^1.11.0",
     "lodash": "^4.17.4",
+    "nodemon": "^1.11.0",
     "vision": "^4.1.1"
   },
   "scripts": {
     "start": "node index.js",
     "test": "NODE_ENV=test lab -P 'spec' src",
-    "dev": "nodemon --inspect=0.0.0.0:9231 -w ./src index.js"
+    "dev": "yarn install && nodemon --inspect=0.0.0.0:9231 -w ./src index.js"
   },
   "devDependencies": {
     "code": "^4.1.0",

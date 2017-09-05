@@ -6,6 +6,9 @@ const addThingsRoute = {
             method: 'POST',
             path: '/api/things',
             config: {
+                tags: ['api'],
+                description: 'Add Things',
+                notes: 'Adds things',
                 handler: function (request, reply) {
                     // Invoke a Seneca action using the request decoration
 

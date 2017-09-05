@@ -4,8 +4,6 @@ services:
     build:
       context: ../services/main
       dockerfile: Dockerfile
-    volumes:
-      - ../services/main/src:/app/src
     ports:
       - '8000:8000'
     depends_on:
@@ -14,8 +12,6 @@ services:
     build:
       context: ../gateway
       dockerfile: Dockerfile
-    volumes:
-      - ../gateway/src:/app/src
     ports:
       - '4000:4000'
     depends_on:
