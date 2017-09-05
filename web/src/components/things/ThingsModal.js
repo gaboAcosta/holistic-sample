@@ -67,7 +67,6 @@ class ThingsModal extends Component {
 
 
     render() {
-        console.log('inside the render!')
         const { title } = this.store
         return (
             <Modal

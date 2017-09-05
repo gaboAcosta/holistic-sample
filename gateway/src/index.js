@@ -41,7 +41,6 @@ server.register(require('vision'), (err) => {
 const mainPlugins = [
     Inert,
     HapiSwagger,
-    mainViewConfig,
     {
         register: Good,
         options: {
@@ -77,7 +76,7 @@ const mainPlugins = [
 ]
 
 const appPlugins = require('./setup/plugins.js')
-const plugins = _.concat(mainPlugins, appPlugins)
+const plugins = _.concat(mainPlugins, appPlugins, [mainViewConfig])
 
 server.register(plugins, (errorRegister) => {
 

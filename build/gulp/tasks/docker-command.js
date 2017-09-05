@@ -24,13 +24,7 @@ function askService(){
                 {
                     name: 'nightwatch'
                 },
-            ],
-            validate: function (answer) {
-                if (answer.length < 1) {
-                    return 'You must choose at least one option!';
-                }
-                return true;
-            }
+            ]
         }
     ])
 }
@@ -60,8 +54,6 @@ module.exports = (gulp) => {
             })
             .then((result) => {
 
-                console.log('this is the current result!!')
-                console.log(result)
                 const { service } = result
                 const { command } = result
 
