@@ -1,13 +1,8 @@
 
-module.exports = (mongoose) => {
+const mongoose = require('mongoose')
 
-    const modelName = 'Things'
-    const { Schema } = mongoose
+const { Schema } = mongoose
 
-    return {
-        name: modelName,
-        model: mongoose.model(modelName, new Schema({
-            name: { type: String, required: true }
-        }))
-    };
-}
+module.exports = mongoose.model('Things', new Schema({
+    name: { type: String, required: true }
+}))

@@ -5,7 +5,7 @@ const Chairo = require('chairo')
 
 const ServerFactory = require('../../util/test/ServerFactory')
 const DatabaseHelper = require('../../util/test/DatabaseHelper')
-const SUT = require('./addThings')
+const SUT = require('./getUser')
 const db = require('../../setup/db')
 
 const lab = exports.lab = Lab.script()
@@ -18,10 +18,7 @@ const expect = Code.expect
 
 const plugins = [
     {
-        register: Chairo,
-        options: {
-            log: 'info+,type:act',
-        },
+        register: Chairo
     },
     db,
     SUT,
@@ -29,7 +26,7 @@ const plugins = [
 
 let server
 
-describe('Add Things method', ()=>{
+describe('Get User method', ()=>{
 
     before((done) => {
         ServerFactory.getServer(plugins)
@@ -43,28 +40,29 @@ describe('Add Things method', ()=>{
         return DatabaseHelper.wipeCollections()
     })
 
-    it('adds a thing to the db', (done) => {
+    it('gets an user from the db', (done) => {
 
-        const newThing = {
-            name: 'An awesome thing'
+        const newUser = {
+            name: 'An awesome user',
+            email: 'test@example.com',
+            password: 'a very secret password'
         }
-        server.seneca.act({
-            src: 'main',
-            cmd: 'addThings',
-            name: newThing.name,
-        }, (err, result) => {
 
-            expect(err).to.be.null()
-            const { _id } = result
+        server.db.Users.create(newUser, (err, {_id}) => {
+            server.seneca.act({
+                src: 'main',
+                service: 'user',
+                cmd: 'get',
+                id: _id,
+            }, (err, result) => {
 
-            server.db.Things.findById(_id)
-                .then((foundThing) => {
-                    expect(foundThing.name).to.equal(newThing.name)
-                    done()
-                })
+                const foundUser = result
+                expect(foundUser.name).to.be.equal(newUser.name)
+                expect(foundUser.email).to.be.equal(newUser.email)
+                expect(foundUser.password).to.equal(newUser.password)
+                done()
 
-
-
+            })
         })
 
     });
