@@ -9,4 +9,4 @@ gulp.task('up', ['docker-up'])
 gulp.task('build', ['docker-build'])
 gulp.task('test', ['docker-test'])
 
-gulp.task('default', [ 'docker:up', 'docker:logs' ]);
+gulp.task('default', [ 'docker-up', 'docker-logs' ]);

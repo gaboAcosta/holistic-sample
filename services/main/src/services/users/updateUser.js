@@ -1,5 +1,5 @@
 
-const updateThingsMethod = {
+const updateUserMethod = {
     register: (server, options, next) => {
         server.dependency('chairo')
         server.seneca.add({
@@ -7,9 +7,6 @@ const updateThingsMethod = {
             service: 'user',
             cmd: 'update',
             id: { required$: true },
-            name: { required$: false },
-            email: { required$: false },
-            password: { required$: false },
         }, ({id, name, email, password}, done) => {
 
             return server.db.Users.findOne({_id: id}, (err, user) => {
@@ -28,9 +25,9 @@ const updateThingsMethod = {
     }
 };
 
-updateThingsMethod.register.attributes = {
-    name: 'updateThingsMethod',
+updateUserMethod.register.attributes = {
+    name: 'updateUserMethod',
     version: '1.0.0'
 };
 
-module.exports = updateThingsMethod
+module.exports = updateUserMethod
