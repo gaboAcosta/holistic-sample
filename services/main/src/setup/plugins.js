@@ -2,7 +2,7 @@ const Glob = require('glob')
 
 const plugins = []
 
-Glob.sync('../methods/**/!(*.spec.js)', {
+Glob.sync('../services/**/!(*.spec.js)', {
     realpath: true,
     cwd: __dirname,
 })

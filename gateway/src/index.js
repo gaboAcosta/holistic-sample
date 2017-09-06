@@ -71,6 +71,7 @@ const mainPlugins = [
         register: Chairo,
         options: {
             log: 'info+,type:act',
+            fixedargs: {fatal$:false}
         },
     },
 ]
@@ -83,7 +84,7 @@ server.register(plugins, (errorRegister) => {
     if (errorRegister) return server.log(['error'], errorRegister)
 
     return server.start(() => {
-
+        require('./setup/errorHandling')(server)
         server.seneca
             .client({
                 type: 'http',
