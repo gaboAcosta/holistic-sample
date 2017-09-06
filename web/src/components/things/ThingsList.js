@@ -5,8 +5,7 @@ import { observer, inject } from 'mobx-react'
 import ThingsModal from './ThingsModal'
 import ThingsModalModel from '../../models/things/ThingsModalModel'
 
-@inject('ThingsListModel')
-@observer
+@inject('ThingsListModel') @observer
 class ThingsList extends Component {
 
     constructor (props) {

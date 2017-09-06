@@ -1,6 +1,7 @@
 import React from 'react'
-import { BrowserRouter as Router} from 'react-router-dom'
+import { Router } from 'react-router-dom'
 import { Route } from 'react-router-dom'
+import history from '../../models/history'
 
 import App from './App'
 import UsersList from '../users/UsersList'
@@ -8,7 +9,7 @@ import ThingsList from '../things/ThingsList'
 import Login from '../auth/Login'
 
 const RouterSetup = () => (
-    <Router>
+    <Router history={history}>
         <div>
             <App>
                 <Route exact path="/" component={ThingsList} />

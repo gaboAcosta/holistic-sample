@@ -1,12 +1,14 @@
 const Hapi = require('hapi')
-const Chairo = require('chairo')
 const Good = require('good')
 const Inert = require('inert')
 const _ = require('lodash')
 const Hoek = require('hoek');
 
 const server = new Hapi.Server()
+const chairoSetup = require('./setup/chairoSetup')
 const mainViewConfig = require('./setup/mainView')
+const jwtSchemeSetup = require('./setup/jwtScheme')
+const validateJWTSetup = require('./setup/validateJWT')
 const HapiSwagger = require('./setup/hapiSwagger')
 
 server.connection({
@@ -39,6 +41,9 @@ server.register(require('vision'), (err) => {
 });
 
 const mainPlugins = [
+    chairoSetup,
+    validateJWTSetup,
+    jwtSchemeSetup,
     Inert,
     HapiSwagger,
     {
@@ -65,13 +70,6 @@ const mainPlugins = [
                     }],
                 }, 'stdout'],
             },
-        },
-    },
-    {
-        register: Chairo,
-        options: {
-            log: 'info+,type:act',
-            fixedargs: {fatal$:false}
         },
     },
 ]

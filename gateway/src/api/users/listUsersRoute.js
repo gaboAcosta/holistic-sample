@@ -7,6 +7,7 @@ const listUserRoute = {
             method: 'GET',
             path: '/api/users',
             config: {
+                auth: 'jwt',
                 tags: ['api'],
                 description: 'List Users',
                 notes: 'List users',
