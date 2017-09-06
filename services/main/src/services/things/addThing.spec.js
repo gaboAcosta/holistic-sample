@@ -18,10 +18,7 @@ const expect = Code.expect
 
 const plugins = [
     {
-        register: Chairo,
-        options: {
-            log: 'info+,type:act',
-        },
+        register: Chairo
     },
     db,
     SUT,

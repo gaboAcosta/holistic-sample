@@ -18,10 +18,7 @@ const expect = Code.expect
 
 const plugins = [
     {
-        register: Chairo,
-        options: {
-            log: 'info+,type:act',
-        },
+        register: Chairo
     },
     db,
     SUT,
@@ -51,24 +48,22 @@ describe('Get User method', ()=>{
             password: 'a very secret password'
         }
 
-        const user = server.db.Users.create(newUser)
-        user.save()
-            .then(({_id}) => {
-                server.seneca.act({
-                    src: 'main',
-                    service: 'user',
-                    cmd: 'get',
-                    id: _id,
-                }, (err, result) => {
+        server.db.Users.create(newUser, (err, {_id}) => {
+            server.seneca.act({
+                src: 'main',
+                service: 'user',
+                cmd: 'get',
+                id: _id,
+            }, (err, result) => {
 
-                    const foundUser = result
-                    expect(foundUser.name).to.be.null()
-                    expect(foundUser.email).to.be.null()
-                    expect(foundUser.password).to.be.null()
-                    done()
+                const foundUser = result
+                expect(foundUser.name).to.be.equal(newUser.name)
+                expect(foundUser.email).to.be.equal(newUser.email)
+                expect(foundUser.password).to.equal(newUser.password)
+                done()
 
-                })
             })
+        })
 
     });
 

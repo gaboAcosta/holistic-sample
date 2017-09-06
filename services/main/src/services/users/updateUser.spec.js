@@ -54,30 +54,28 @@ describe('Update User method', ()=>{
             password: 'a very secret updated password'
         }
 
-        const user = server.db.Users.create(newUser)
-        user.save()
-            .then(({_id}) => {
-                server.seneca.act({
-                    src: 'main',
-                    service: 'user',
-                    cmd: 'delete',
-                    id: _id,
-                    name: updateValues.name,
-                    email: updateValues.email,
-                    password: updateValues.password,
-                }, (err, result) => {
+        server.db.Users.create(newUser, (err, {_id}) => {
+            server.seneca.act({
+                src: 'main',
+                service: 'user',
+                cmd: 'update',
+                id: _id,
+                name: updateValues.name,
+                email: updateValues.email,
+                password: updateValues.password,
+            }, (err, result) => {
 
-                    expect(err).to.be.null()
-                    server
-                        .db
-                        .Users
-                        .findById(_id)
-                        .then((foundUser) => {
-                            expect(foundUser.name).to.equal(updateValues.name)
-                            expect(foundUser.email).to.equal(updateValues.email)
-                            expect(foundUser.password).to.equal(updateValues.password)
-                            done()
-                        })
+                expect(err).to.be.null()
+                server
+                    .db
+                    .Users
+                    .findById(_id)
+                    .then((foundUser) => {
+                        expect(foundUser.name).to.equal(updateValues.name)
+                        expect(foundUser.email).to.equal(updateValues.email)
+                        expect(foundUser.password).to.equal(updateValues.password)
+                        done()
+                    })
             })
         })
 

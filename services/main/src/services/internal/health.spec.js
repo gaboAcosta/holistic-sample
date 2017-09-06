@@ -13,10 +13,7 @@ const expect = Code.expect
 const SUT = require('./health')
 const plugins = [
     {
-        register: Chairo,
-        options: {
-            log: 'info+,type:act',
-        },
+        register: Chairo
     },
     SUT,
 ]

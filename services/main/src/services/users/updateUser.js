@@ -5,7 +5,7 @@ const updateThingsMethod = {
         server.seneca.add({
             src: 'main',
             service: 'user',
-            cmd: 'list',
+            cmd: 'update',
             id: { required$: true },
             name: { required$: false },
             email: { required$: false },

@@ -18,10 +18,7 @@ const expect = Code.expect
 
 const plugins = [
     {
-        register: Chairo,
-        options: {
-            log: 'info+,type:act',
-        },
+        register: Chairo
     },
     db,
     SUT,
@@ -51,28 +48,26 @@ describe('Delete User method', ()=>{
             password: 'a very secret password'
         }
 
-        const user = server.db.Users.create(newUser)
-        user.save()
-            .then(({_id}) => {
-                server.seneca.act({
-                    src: 'main',
-                    service: 'user',
-                    cmd: 'delete',
-                    id: _id,
-                }, (err, result) => {
+        server.db.Users.create(newUser, (err, {_id}) => {
+            server.seneca.act({
+                src: 'main',
+                service: 'user',
+                cmd: 'delete',
+                id: _id,
+            }, (err, result) => {
 
-                    expect(err).to.be.null()
-                    server
-                        .db
-                        .Users
-                        .findById(_id)
-                        .then((foundUser) => {
-                            expect(foundUser.name).to.be.null()
-                            done()
-                        })
+                expect(err).to.be.null()
+                server
+                    .db
+                    .Users
+                    .findById(_id)
+                    .then((foundUser) => {
+                        expect(foundUser).to.be.null()
+                        done()
+                    })
 
-                })
             })
+        })
 
 
 

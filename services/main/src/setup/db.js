@@ -18,10 +18,9 @@ const dbSetup = {
             cwd: __dirname,
         })
         .forEach((file) => {
-            const schema = require(file)(mongoose)
-            const modelName = schema.modelName
-            console.log(`Loading model: ${modelName}`)
-            db[modelName] = schema.model
+            const model = require(file)
+            const modelName = model.modelName
+            db[modelName] = model
         })
 
         server.decorate('server','db', db)

@@ -2,6 +2,7 @@
 const Code = require('code')
 const Lab = require('lab')
 const Chairo = require('chairo')
+const _ = require('lodash')
 
 const ServerFactory = require('../../util/test/ServerFactory')
 const DatabaseHelper = require('../../util/test/DatabaseHelper')
@@ -18,10 +19,7 @@ const expect = Code.expect
 
 const plugins = [
     {
-        register: Chairo,
-        options: {
-            log: 'info+,type:act',
-        },
+        register: Chairo
     },
     db,
     SUT,
@@ -29,7 +27,20 @@ const plugins = [
 
 let server
 
-describe('Add Things method', ()=>{
+const mockUsers = [
+    {
+        name: 'An awesome user',
+        email: 'test@example.com',
+        password: 'a very secret password'
+    },
+    {
+        name: 'Another awesome user',
+        email: 'another@example.com',
+        password: 'another very secret password'
+    }
+]
+
+describe('List Users method', ()=>{
 
     before((done) => {
         ServerFactory.getServer(plugins)
@@ -43,28 +54,32 @@ describe('Add Things method', ()=>{
         return DatabaseHelper.wipeCollections()
     })
 
-    it('adds a thing to the db', (done) => {
+    it('lists the users from the db', (done) => {
 
-        const newThing = {
-            name: 'An awesome thing'
-        }
-        server.seneca.act({
-            src: 'main',
-            cmd: 'addThings',
-            name: newThing.name,
-        }, (err, result) => {
+
+
+        server.db.Users.create(mockUsers, (err, users) => {
 
             expect(err).to.be.null()
-            const { _id } = result
 
-            server.db.Things.findById(_id)
-                .then((foundThing) => {
-                    expect(foundThing.name).to.equal(newThing.name)
-                    done()
+            server.seneca.act({
+                src: 'main',
+                service: 'user',
+                cmd: 'list'
+            }, (err, result) => {
+
+                const users = result
+
+                users.map((user) => {
+                    const originalUser = _.first(mockUsers.filter(u=>u.email === user.email))
+                    expect(originalUser).to.be.an.object();
+                    expect(originalUser.name).to.be.equal(user.name)
+                    expect(originalUser.email).to.be.equal(user.email)
+                    expect(originalUser.password).to.equal(user.password)
                 })
 
-
-
+                done()
+            })
         })
 
     });

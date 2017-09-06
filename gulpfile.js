@@ -2,11 +2,11 @@
 var gulp = require('gulp');
 require('gulp-import-tasks')('build/gulp/tasks');
 
-// I like my tasks with dots so I added some alias here
-gulp.task('docker:logs', ['docker-logs'])
-gulp.task('docker:command', ['docker-command'])
-gulp.task('docker:down', ['docker-down'])
-gulp.task('docker:up', ['docker-up'])
-gulp.task('docker:build', ['docker-build'])
+gulp.task('logs', ['docker-logs'])
+gulp.task('command', ['docker-command'])
+gulp.task('down', ['docker-down'])
+gulp.task('up', ['docker-up'])
+gulp.task('build', ['docker-build'])
+gulp.task('test', ['docker-test'])
 
 gulp.task('default', [ 'docker:up', 'docker:logs' ]);
