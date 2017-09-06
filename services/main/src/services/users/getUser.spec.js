@@ -59,7 +59,6 @@ describe('Get User method', ()=>{
                 const foundUser = result
                 expect(foundUser.name).to.be.equal(newUser.name)
                 expect(foundUser.email).to.be.equal(newUser.email)
-                expect(foundUser.password).to.equal(newUser.password)
                 done()
 
             })

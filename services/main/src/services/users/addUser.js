@@ -1,4 +1,6 @@
 
+const Boom = require('boom')
+
 const addUserMethod = {
     register: (server, options, next) => {
         server.dependency('chairo')
@@ -11,12 +13,25 @@ const addUserMethod = {
             password: { required$: true },
         }, ({name, email, password}, done) => {
 
-            const user = {name, email, password}
+            const newUser = {name, email, password}
 
             server
                 .db
                 .Users
-                .create(user, done)
+                .create(newUser, (err, user) => {
+                    if(err){
+                        const error = Boom.badData(err.errmsg)
+                        return done(null, { error })
+                    }
+
+                    if(!user){
+                        const error = Boom.notFound('user not found!')
+                        return done(null, { error })
+                    }
+
+                    return done(null, { user })
+
+                })
         })
         next()
     }

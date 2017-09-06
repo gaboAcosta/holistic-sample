@@ -73,7 +73,6 @@ describe('Update User method', ()=>{
                     .then((foundUser) => {
                         expect(foundUser.name).to.equal(updateValues.name)
                         expect(foundUser.email).to.equal(updateValues.email)
-                        expect(foundUser.password).to.equal(updateValues.password)
                         done()
                     })
             })

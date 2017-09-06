@@ -54,16 +54,16 @@ describe('Add User method', ()=>{
             name: newUser.name,
             email: newUser.email,
             password: newUser.password,
-        }, (err, result) => {
+        }, (fatal, {error, user}) => {
 
-            expect(err).to.be.null()
-            const { _id } = result
+            expect(fatal).to.be.null()
+            expect(error).to.be.undefined()
+            const { _id } = user
 
             server.db.Users.findById(_id)
                 .then((foundUser) => {
                     expect(foundUser.name).to.equal(newUser.name)
                     expect(foundUser.email).to.equal(newUser.email)
-                    expect(foundUser.password).to.equal(newUser.password)
                     done()
                 })
         })

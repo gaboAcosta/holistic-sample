@@ -75,7 +75,6 @@ describe('List Users method', ()=>{
                     expect(originalUser).to.be.an.object();
                     expect(originalUser.name).to.be.equal(user.name)
                     expect(originalUser.email).to.be.equal(user.email)
-                    expect(originalUser.password).to.equal(user.password)
                 })
 
                 done()
