@@ -6,6 +6,7 @@
   "author": "Gabo Acosta",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "boom": "^5.2.0",
     "chairo": "^3.0.0",
     "eslint": "^4.5.0",
@@ -14,9 +15,11 @@
     "good-console": "^6.4.0",
     "good-squeeze": "^5.0.2",
     "hapi": "^16.5.2",
+    "jsonwebtoken": "^7.4.3",
     "lodash": "^4.17.4",
     "mongoose": "^4.11.9",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "present": "^1.0.0"
   },
   "scripts": {
     "start": "node index.js",

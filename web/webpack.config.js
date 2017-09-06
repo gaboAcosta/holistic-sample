@@ -2,6 +2,7 @@ const path = require('path')
 
 module.exports = {
     entry: './src/index.js',
+    devtool: 'eval-source-map',
     output: {
         path: path.join(__dirname, 'build'),
         filename: 'bundle.js'

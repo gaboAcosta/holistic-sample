@@ -1,4 +1,6 @@
-import agent from 'superagent'
+import APIClient from '../util/ApiClient'
+
+const agent = APIClient.getClient()
 
 export default class UserService {
 

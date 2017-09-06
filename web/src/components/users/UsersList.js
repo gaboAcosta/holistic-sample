@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { Icon, Table, Button, Modal } from 'semantic-ui-react'
 import { observer, inject } from 'mobx-react'
+import GuardedComponent from '../auth/GuardedComponent'
 
 import UserModal from './UserModal'
 import UserModalModel from '../../models/users/UserModalModel'
 
-@inject('UsersListModel')
-@observer
-class UsersList extends Component {
+
+@inject('UsersListModel') @observer
+class UsersList extends GuardedComponent {
 
     constructor (props) {
         super(props)
