@@ -1,3 +1,4 @@
+const Boom = require('boom')
 const Joi = require('joi')
 
 const deleteUserRoute = {
@@ -22,7 +23,8 @@ const deleteUserRoute = {
                     }, (err, result) => {
 
                         if (err) {
-                            return reply(err);
+                            const error = err.toString()
+                            return reply(Boom.internal(error))
                         }
 
                         return reply(result);
