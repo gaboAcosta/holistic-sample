@@ -19,7 +19,7 @@ const dbSetup = {
         })
         .forEach((file) => {
             const schema = require(file)(mongoose)
-            const modelName = schema.name
+            const modelName = schema.modelName
             console.log(`Loading model: ${modelName}`)
             db[modelName] = schema.model
         })
