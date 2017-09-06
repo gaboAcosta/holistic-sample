@@ -15,13 +15,16 @@ const updateUserRoute = {
 
                     const { id } = request.params
                     const { name } = request.payload
-                    console.log('=== CALLING SERVICE ===')
+                    const { email } = request.payload
+                    const { password } = request.payload
                     server.seneca.act({
                         src: 'main',
                         service: 'user',
                         cmd: 'update',
                         id,
                         name,
+                        email,
+                        password,
                     }, (err, result) => {
 
                         if (err) {
@@ -31,6 +34,17 @@ const updateUserRoute = {
 
                         return reply(result);
                     });
+                },
+                response: {
+                    modify: true,
+                    options: {
+                        stripUnknown: true,
+                    },
+                    schema: Joi.object().keys({
+                        _id: Joi.string().required(),
+                        name: Joi.string().required(),
+                        email: Joi.string().required(),
+                    }),
                 },
                 validate: {
                     params: {
