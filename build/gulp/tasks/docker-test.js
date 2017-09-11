@@ -8,7 +8,7 @@ function askService(){
     return inquirer.prompt([
         {
             type: 'list',
-            message: 'Select a service to tast',
+            message: 'Select a service to test',
             name: 'service',
             choices: [
                 {
@@ -40,7 +40,7 @@ module.exports = (gulp) => {
             .then(({service}) => {
                 const commands = ['run','--rm', service, 'test']
 
-                dockerComposeUtil.exec(commands, argv.env)
+                dockerComposeUtil.exec(commands, 'test')
             })
             .then((result) => {
 

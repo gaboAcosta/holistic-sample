@@ -36,6 +36,7 @@ class ThingsModal extends Component {
                     <label>Name</label>
                     <input
                         value={name}
+                        id="thing-name"
                         placeholder='First Name'
                         onChange={this.changeName}
                     />
@@ -70,18 +71,28 @@ class ThingsModal extends Component {
         const { title } = this.store
         return (
             <Modal
+                id="thing-modal"
                 open={true}
                 size={'tiny'}
+                className={'add-thing'}
             >
                 <Header content={title} />
                 <Modal.Content>
                     {this.modalContent()}
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button color='green' onClick={this.submit}>
+                    <Button
+                        color='green'
+                        onClick={this.submit}
+                        id="confirm-thing-modal"
+                    >
                         <Icon name='checkmark' /> Confirm
                     </Button>
-                    <Button color='red' onClick={this.cancel}>
+                    <Button
+                        color='red'
+                        onClick={this.cancel}
+                        id="cancel-thing-modal"
+                    >
                         <Icon name='checkmark' /> Cancel
                     </Button>
                 </Modal.Actions>
