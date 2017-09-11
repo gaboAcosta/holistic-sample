@@ -79,7 +79,7 @@ class ThingsList extends Component {
                                                 icon
                                                 onClick={()=>{this.openModal('update', thing)}}
                                             >
-                                                <Icon name='write' /> Edit
+                                                <Icon name='write' id="edit-thing" /> Edit
                                             </Button>
 
                                             <Button
@@ -87,7 +87,7 @@ class ThingsList extends Component {
                                                 icon
                                                 onClick={()=>{this.openModal('delete', thing)}}
                                             >
-                                                <Icon name='trash' /> Delete
+                                                <Icon name='trash' id="delete-thing" /> Delete
                                             </Button>
                                         </Table.Cell>
                                     </Table.Row>
@@ -100,6 +100,7 @@ class ThingsList extends Component {
                             <Table.HeaderCell colSpan='2'>
                                 <Button
                                     floated='right'
+                                    id="add-thing"
                                     icon
                                     labelPosition='left'
                                     primary size='small'
@@ -107,7 +108,7 @@ class ThingsList extends Component {
                                         this.openModal('create', {name:''})
                                     }}
                                 >
-                                    <Icon name='add' /> Add Thing!
+                                    <Icon name='add' id="create-thing"/> Add Thing!
                                 </Button>
                             </Table.HeaderCell>
                         </Table.Row>

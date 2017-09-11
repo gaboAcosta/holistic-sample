@@ -12,7 +12,6 @@ services:
     build:
       context: ../e2e
       dockerfile: Dockerfile
-    command: 'test:verbose'
     depends_on:
       - chromedriver
       - web
@@ -29,6 +28,8 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - gateway
+    ports:
+      - '8080:80'
   main:
     environment:
       - NODE_ENV=test
