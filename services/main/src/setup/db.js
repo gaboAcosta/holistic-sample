@@ -4,12 +4,30 @@ const path = require('path')
 const config = require('../config')
 mongoose.Promise = global.Promise
 
+
+let connectionAttempts = 0
+function connectAndRetry(){
+    connectionAttempts++
+    const mongoURI = `${config.mongo.host}/${config.mongo.db}`
+    const mongoOptions = config.mongo.options || {}
+
+    mongoose.connect(mongoURI, mongoOptions)
+        .catch(err => {
+            if (connectionAttempts < 10) {
+                console.log('Retrying connection to Mongo')           
+                setTimeout(connectAndRetry, 3000)
+            } else if(err) {
+                console.log('Cannot connect to Mongo')
+                console.error(err)
+                process.exit(1)
+            }
+        })
+}
+
 const dbSetup = {
     register: (server, options, next) => {
-        const mongoURI = `${config.mongo.host}/${config.mongo.db}`
-        const mongoOptions = config.mongo.options || {}
-
-        mongoose.connect(mongoURI, mongoOptions)
+        
+        connectAndRetry()
 
         const db = {}
 

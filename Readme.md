@@ -6,7 +6,13 @@ The only dependency for the host (there are internal dependencies) is:
 
 To run de project:
 
-`yarn dev:up`
+First we initializa our Mongo volume to store our data
+
+`gulp init`
+
+Then we start our project
+
+`gulp`
 
 If you add dependencies or change the package.json of any of the sub projects you need to stop and run the containers again so they are built again, this is because dependencies get installed only on build, also the package.json, webpack.config.js and others are copied at build time (look inside Dockerfile, anything there is on build time only)
 
@@ -16,13 +22,37 @@ Open a browser:
 
 `http://localhost:4000/`
 
-To run e2e tests
+To add a new dependency through Yarn:
 
-`yarn e2e`
+`gulp command`
 
-Please keep in mind, this will leave all the dependencies for e2e running, so make sure to run this after
+and then
 
-`yarn e2e:down`
+`add myDependency`
+
+This is needed because dependencies live inside of the containers
+
+To run tests
+
+First make sure to build your images with the test env
+
+`gulp build --env=test`
+
+Then you can run your tests with
+
+`gulp test`
+
+Support for running tests without building comming up
+
+Please keep in mind, this will leave all the dependencies for test running, so make sure to run this after
+
+`gulp down --env=test`
+
+And if you want to go back to dev mode you need to
+
+`gulp build && gulp`
+
+So that your dependencies are again on dev mode
 
 The test run will produce videos on `/e2e/src/videos`
 
