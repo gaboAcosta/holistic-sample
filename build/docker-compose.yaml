@@ -20,11 +20,11 @@ services:
   mongo:
     image: mongo:2.6.12
     volumes:
-      - mongo:/data/db
+      - holistic_mongo:/data/db
     ports:
       - '27017:27017'
 
 volumes:
-  mongo:
+  holistic_mongo:
     external: true
 

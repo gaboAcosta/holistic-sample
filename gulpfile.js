@@ -8,5 +8,6 @@ gulp.task('down', ['docker-down'])
 gulp.task('up', ['docker-up'])
 gulp.task('build', ['docker-build'])
 gulp.task('test', ['docker-test'])
+gulp.task('init', ['docker-init'])
 
 gulp.task('default', [ 'docker-up', 'docker-logs' ]);
