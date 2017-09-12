@@ -7,7 +7,7 @@ const Hoek = require('hoek');
 const server = new Hapi.Server()
 const chairoSetup = require('./setup/chairoSetup')
 const mainViewConfig = require('./setup/mainView')
-const jwtSchemeSetup = require('./setup/jwtScheme') 
+const jwtSchemeSetup = require('./setup/jwtScheme')
 const validateJWTSetup = require('./setup/validateJWT')
 const HapiSwagger = require('./setup/hapiSwagger')
 
