@@ -6,7 +6,7 @@ const healthMethod = {
             src: 'main',
             cmd: 'healthCheck',
         }, (message, done) => {
-            return done(null, { response: 'Everything fine in the main service!' })
+            return done(null, { response: 'Everything fine in the main service.' })
         })
 
         next()

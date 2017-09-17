@@ -36,7 +36,7 @@ module.exports = (gulp) => {
     return gulp.task('docker-build', (cb) => {
         return askService()
             .then(({service}) => {
-                const commands = ['build']
+                const commands = ['build','--no-cache']
                 service && service !== 'all' && commands.push(service)
                 dockerComposeUtil.exec(commands, argv.env)
             })

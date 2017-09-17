@@ -1,29 +1,39 @@
-version: '2'
+version: '2.3'
 services:
   main:
     build:
       context: ../services/main
-      dockerfile: Dockerfile_dev
+      dockerfile: Dockerfile
+    working_dir: /app_dev
     command: 'dev'
+    environment:
+      - NODE_ENV=develop
     ports:
       - '9230:9230'
     volumes:
-      - ../services/main:/app
+      - ../services/main:/app_dev
   gateway:
     build:
       context: ../gateway
-      dockerfile: Dockerfile_dev
+      dockerfile: Dockerfile
+    working_dir: /app_dev
     command: 'dev'
+    environment:
+      - NODE_ENV=develop
     ports:
       - '9231:9231'
     volumes:
-      - ../gateway:/app
+      - ../gateway:/app_dev
   web:
     build:
       context: ../web
-      dockerfile: Dockerfile_dev
+      dockerfile: Dockerfile
+      target: builder
+    working_dir: /app_dev
+    entrypoint: 'yarn'
+    command: 'dev'
     volumes:
-      - ../web:/app
+      - ../web:/app_dev
     ports:
       - '8080:8080'
     depends_on:

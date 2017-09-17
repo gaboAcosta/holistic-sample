@@ -1,4 +1,4 @@
-version: '2'
+version: '2.3'
 services:
   main:
     build:
@@ -17,6 +17,13 @@ services:
     depends_on:
       - mongo
       - main
+  web:
+    build:
+      context: ../web
+      dockerfile: Dockerfile
+      target: server
+    depends_on:
+      - gateway
   mongo:
     image: mongo:2.6.12
     volumes:

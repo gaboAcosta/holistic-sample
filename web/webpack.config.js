@@ -20,6 +20,7 @@ module.exports = {
                 target: 'http://gateway:4000',
                 secure: false
             }
-        }
+        },
+        contentBase: path.join(__dirname, 'public')
     }
 }
