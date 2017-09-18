@@ -25,6 +25,8 @@ services:
       context: ../web
       dockerfile: Dockerfile
       target: server
+    ports:
+      - '8081:80'
     depends_on:
       - gateway
   mongo:

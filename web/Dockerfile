@@ -14,6 +14,8 @@ FROM nginx:1.13.3 as server
 MAINTAINER Gabo Acosta <gabo@gaboacosta.com>
 
 RUN rm /usr/share/nginx/html/index.html
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/public/index.html /usr/share/nginx/html
 COPY --from=builder /app/build/bundle.js /usr/share/nginx/html
 

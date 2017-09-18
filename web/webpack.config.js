@@ -15,6 +15,9 @@ module.exports = {
     },
     devServer: {
         host: '0.0.0.0',
+        historyApiFallback: {
+            index: 'index.html'
+        },
         proxy: {
             '/api': {
                 target: 'http://gateway:4000',
