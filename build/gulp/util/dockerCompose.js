@@ -48,17 +48,20 @@ const devCompose = 'docker-compose.local.yaml'
 const testCompose = 'docker-compose.test.yaml'
 
 const filesDictionary = {
-    dev: [
+    develop: [
         mainCompose,
         devCompose,
     ],
     test: [
         mainCompose,
         testCompose,
+    ],
+    production: [
+        mainCompose
     ]
 }
 
-const getFilesForEnv = (env='dev') => {
+const getFilesForEnv = (env='develop') => {
     return filesDictionary[env]
 }
 

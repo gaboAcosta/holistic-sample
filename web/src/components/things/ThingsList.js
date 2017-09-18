@@ -108,7 +108,7 @@ class ThingsList extends Component {
                                         this.openModal('create', {name:''})
                                     }}
                                 >
-                                    <Icon name='add' id="create-thing"/> Add Thing!
+                                    <Icon name='add' id="create-thing"/> Add Thing
                                 </Button>
                             </Table.HeaderCell>
                         </Table.Row>

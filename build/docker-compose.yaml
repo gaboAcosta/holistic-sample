@@ -1,4 +1,4 @@
-version: '2'
+version: '2.3'
 services:
   main:
     build:
@@ -6,17 +6,29 @@ services:
       dockerfile: Dockerfile
     ports:
       - '8000:8000'
+      - '3000:3000'
     depends_on:
       - mongo
   gateway:
     build:
       context: ../gateway
       dockerfile: Dockerfile
+    environment:
+      - MAIN_HOST=
     ports:
       - '4000:4000'
     depends_on:
       - mongo
       - main
+  web:
+    build:
+      context: ../web
+      dockerfile: Dockerfile
+      target: server
+    ports:
+      - '8081:80'
+    depends_on:
+      - gateway
   mongo:
     image: mongo:2.6.12
     volumes:

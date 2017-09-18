@@ -4,9 +4,10 @@ const Inert = require('inert')
 const _ = require('lodash')
 const Hoek = require('hoek');
 
+const serverConfig = require('./config')
+
 const server = new Hapi.Server()
 const chairoSetup = require('./setup/chairoSetup')
-const mainViewConfig = require('./setup/mainView')
 const jwtSchemeSetup = require('./setup/jwtScheme')
 const validateJWTSetup = require('./setup/validateJWT')
 const HapiSwagger = require('./setup/hapiSwagger')
@@ -75,7 +76,7 @@ const mainPlugins = [
 ]
 
 const appPlugins = require('./setup/plugins.js')
-const plugins = _.concat(mainPlugins, appPlugins, [mainViewConfig])
+const plugins = _.concat(mainPlugins, appPlugins)
 
 server.register(plugins, (errorRegister) => {
 
@@ -83,10 +84,12 @@ server.register(plugins, (errorRegister) => {
 
     return server.start(() => {
         require('./setup/errorHandling')(server)
+        const host = serverConfig.mainServiceHost
+        console.log('======== Connecting to  main service on host:', host)
         server.seneca
             .client({
                 type: 'http',
-                host: 'main',
+                host,
                 port: 8000,
                 pin: 'src:main',
             })

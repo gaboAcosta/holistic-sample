@@ -1,18 +1,21 @@
 
-FROM nginx:1.13.3
+FROM node:8 as builder
 
 MAINTAINER Gabo Acosta <gabo@gaboacosta.com>
 
-RUN apt-get update
-RUN apt-get install -y curl gnupg2
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
-RUN apt-get install -y nodejs
-
-RUN npm install -g yarn
-
 WORKDIR /app
-COPY . ./
+
+COPY  . ./
 RUN yarn install
 RUN yarn build
-RUN cp -r build/bundle.js /usr/share/nginx/html
+
+FROM nginx:1.13.3 as server
+
+MAINTAINER Gabo Acosta <gabo@gaboacosta.com>
+
+RUN rm /usr/share/nginx/html/index.html
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/public/index.html /usr/share/nginx/html
+COPY --from=builder /app/build/bundle.js /usr/share/nginx/html
 

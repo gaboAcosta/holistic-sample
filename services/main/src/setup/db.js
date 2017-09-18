@@ -11,6 +11,10 @@ function connectAndRetry(){
     const mongoURI = `${config.mongo.host}/${config.mongo.db}`
     const mongoOptions = config.mongo.options || {}
 
+    console.log('=======Connecting to mongoDB')
+    console.log('mongoURI', mongoURI)
+    console.log('mongoOptions', JSON.stringify(mongoOptions))
+
     mongoose.connect(mongoURI, mongoOptions)
         .catch(err => {
             if (connectionAttempts < 10) {

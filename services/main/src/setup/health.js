@@ -3,10 +3,9 @@ const healthRoute = {
     register: function (server, options, next) {
         server.route({
             method: 'GET',
-            path: '/api/health',
+            path: '/health',
             config: {
-                tags: ['api'],
-                description: 'Main',
+                description: 'Health check',
                 notes: 'Returns a health message',
                 handler: function (request, reply) {
                     // Invoke a Seneca action using the request decoration
