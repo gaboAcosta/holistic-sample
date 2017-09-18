@@ -13,6 +13,7 @@ class ThingsModal extends Component {
         super(props)
         this.changeName = this.changeName.bind(this)
         this.submit = this.submit.bind(this)
+        this.cancel = this.cancel.bind(this)
     }
 
     changeName(event){

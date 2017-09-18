@@ -15,6 +15,7 @@ class ThingsModal extends Component {
         this.changeEmail = this.changeEmail.bind(this)
         this.changePassword = this.changePassword.bind(this)
         this.submit = this.submit.bind(this)
+        this.cancel = this.cancel.bind(this)
     }
 
     changeName(event){
