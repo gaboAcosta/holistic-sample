@@ -1,7 +1,7 @@
 
 module.exports = {
     mongo:{
-        host: 'mongodb://holistic-mongo-915b623888f87778.elb.us-west-1.amazonaws.com',
+        host: process.env.MONGO_HOST,
         db: 'holistic',
         options: {
             useMongoClient: true,
