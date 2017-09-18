@@ -9,7 +9,7 @@ COPY  . ./
 RUN yarn install
 RUN yarn build
 
-FROM nginx:1.13.3 as sever
+FROM nginx:1.13.3 as server
 
 MAINTAINER Gabo Acosta <gabo@gaboacosta.com>
 

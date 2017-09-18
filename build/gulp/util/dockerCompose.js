@@ -55,6 +55,9 @@ const filesDictionary = {
     test: [
         mainCompose,
         testCompose,
+    ],
+    production: [
+        mainCompose
     ]
 }
 

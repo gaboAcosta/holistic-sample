@@ -1,9 +1,6 @@
 version: '2.3'
 services:
   main:
-    build:
-      context: ../services/main
-      dockerfile: Dockerfile
     working_dir: /app_dev
     command: 'dev'
     environment:
@@ -13,9 +10,6 @@ services:
     volumes:
       - ../services/main:/app_dev
   gateway:
-    build:
-      context: ../gateway
-      dockerfile: Dockerfile
     working_dir: /app_dev
     command: 'dev'
     environment:
@@ -26,8 +20,6 @@ services:
       - ../gateway:/app_dev
   web:
     build:
-      context: ../web
-      dockerfile: Dockerfile
       target: builder
     working_dir: /app_dev
     entrypoint: 'yarn'

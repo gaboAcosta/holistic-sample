@@ -6,12 +6,15 @@ services:
       dockerfile: Dockerfile
     ports:
       - '8000:8000'
+      - '3000:3000'
     depends_on:
       - mongo
   gateway:
     build:
       context: ../gateway
       dockerfile: Dockerfile
+    environment:
+      - MAIN_HOST=
     ports:
       - '4000:4000'
     depends_on:
@@ -22,6 +25,8 @@ services:
       context: ../web
       dockerfile: Dockerfile
       target: server
+    ports:
+      - '8080:80'
     depends_on:
       - gateway
   mongo:

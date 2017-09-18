@@ -5,7 +5,9 @@ const _ = require('lodash')
 const db = require('./setup/db')
 const server = new Hapi.Server()
 
-server.connection({ port: 3000, host: 'localhost' })
+const healthRoute = require('./setup/health')
+
+server.connection({ port: 3000, host: '0.0.0.0' })
 
 const mainPlugins = [
     db,
@@ -37,7 +39,13 @@ const mainPlugins = [
     },
     {
         register: Chairo,
+        options: {
+            log: 'info+,type:act',
+            fixedargs: {fatal$:false},
+            default$: {message: 'All good!'}
+        },
     },
+    healthRoute
 ]
 
 // App Plugins
