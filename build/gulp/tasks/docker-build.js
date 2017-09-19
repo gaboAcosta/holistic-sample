@@ -1,7 +1,6 @@
 
 const inquirer = require('inquirer')
 const dockerComposeUtil = require('../util/dockerCompose')
-const gUtil = require('gulp-util');
 const chalk = require('chalk');
 const argv = require('yargs').argv;
 
@@ -33,17 +32,15 @@ function askService(){
 }
 
 module.exports = (gulp) => {
-    return gulp.task('docker-build', (cb) => {
+    return gulp.task('docker-build', () => {
         return askService()
             .then(({service}) => {
-                const commands = ['build','--no-cache']
-                service && service !== 'all' && commands.push(service)
-                dockerComposeUtil.exec(commands, argv.env)
-            })
-            .catch((err)=>{
-                console.log('SOMETHING WENT WRONG!!!')
-                console.log(err)
-                cb(err)
+                 return dockerComposeUtil.getEnvironment()
+                     .then(({ env }) => {
+                         const commands = ['build','--no-cache']
+                         service && service !== 'all' && commands.push(service)
+                         return dockerComposeUtil.exec(commands, env)
+                     })
             })
     });
 }

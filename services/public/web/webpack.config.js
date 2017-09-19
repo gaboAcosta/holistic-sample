@@ -1,8 +1,10 @@
 const path = require('path')
 
+const devtool = process.env.NODE_ENV === 'develop' ? 'eval-source-map' : undefined
+
 module.exports = {
     entry: './src/index.js',
-    devtool: 'eval-source-map',
+    devtool,
     output: {
         path: path.join(__dirname, 'build'),
         filename: 'bundle.js'

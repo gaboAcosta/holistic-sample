@@ -34,19 +34,23 @@ This is needed because dependencies live inside of the containers
 
 To run tests
 
-First make sure to build your images with the test env
+First make sure to build your images with the correct env
 
-`gulp build --env=test`
+`gulp build` to build on develop mode or `gulp build --env=production`
 
 Then you can run your tests with
 
 `gulp test`
 
-Support for running tests without building comming up
+Support for running tests without building coming up
+
+When testing develop, webpack dev server takes a lot of time to compile, almost 50 seconds, but subsequent runs will use the same build or rebuilds which are a lot faster
+
+To make it easier, you can run `gulp -e` and when asked what environment to use, select testDevelop, then wait for webpack message to say it is completed, then you can run `gulp test`, select nightwatch and tests should run a lot faster!
 
 Please keep in mind, this will leave all the dependencies for test running, so make sure to run this after
 
-`gulp down --env=test`
+`gulp down` and select testDevelop or testProduction depending on the environment you selected for e2e
 
 And if you want to go back to dev mode you need to
 

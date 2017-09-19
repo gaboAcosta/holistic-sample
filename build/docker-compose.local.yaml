@@ -24,6 +24,9 @@ services:
       - '9231:9231'
     volumes:
       - ../services/public/gateway:/app_dev
+    depends_on:
+      - mongo
+      - main
   web:
     build:
       context: ../services/public/web
