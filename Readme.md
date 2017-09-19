@@ -20,7 +20,7 @@ To test the project:
 
 Open a browser:
 
-`http://localhost:4000/`
+`http://localhost:8080/`
 
 To add a new dependency through Yarn:
 

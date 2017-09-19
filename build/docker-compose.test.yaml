@@ -12,11 +12,13 @@ services:
     build:
       context: ../e2e
       dockerfile: Dockerfile
+    working_dir: /e2e
+    command: 'test'
     depends_on:
       - chromedriver
       - web
     volumes:
-      - ../e2e/src:/e2e/src
+      - ../e2e:/e2e
   gateway:
     environment:
       - NODE_ENV=test
