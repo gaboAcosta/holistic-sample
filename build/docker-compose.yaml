@@ -2,8 +2,10 @@ version: '2.3'
 services:
   main:
     build:
-      context: ../services/main
+      context: ../services/private/main
       dockerfile: Dockerfile
+    environment:
+      - MONGO_HOST=
     ports:
       - '8000:8000'
       - '3000:3000'
@@ -11,7 +13,7 @@ services:
       - mongo
   gateway:
     build:
-      context: ../gateway
+      context: ../services/public/gateway
       dockerfile: Dockerfile
     environment:
       - MAIN_HOST=
@@ -22,7 +24,7 @@ services:
       - main
   web:
     build:
-      context: ../web
+      context: ../services/public/web
       dockerfile: Dockerfile
       target: server
     ports:

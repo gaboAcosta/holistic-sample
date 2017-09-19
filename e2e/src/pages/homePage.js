@@ -21,7 +21,7 @@ const homeCommands = {
 };
 
 module.exports = {
-    url: 'http://gateway:4000',
+    url: 'http://web:8080',
     commands: [homeCommands],
     elements: {
         thingModal: {

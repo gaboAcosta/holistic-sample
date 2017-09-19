@@ -8,7 +8,7 @@ services:
     ports:
       - '9230:9230'
     volumes:
-      - ../services/main:/app_dev
+      - ../services/private/main:/app_dev
   gateway:
     working_dir: /app_dev
     command: 'dev'
@@ -17,7 +17,7 @@ services:
     ports:
       - '9231:9231'
     volumes:
-      - ../gateway:/app_dev
+      - ../services/public/gateway:/app_dev
   web:
     build:
       target: builder
@@ -25,7 +25,7 @@ services:
     entrypoint: 'yarn'
     command: 'dev'
     volumes:
-      - ../web:/app_dev
+      - ../services/public/web:/app_dev
     ports:
       - '8080:8080'
     depends_on:
