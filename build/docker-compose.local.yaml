@@ -35,6 +35,8 @@ services:
     working_dir: /app_dev
     entrypoint: 'yarn'
     command: 'dev'
+    environment:
+      - NODE_ENV=develop
     volumes:
       - ../services/public/web:/app_dev
     ports:
