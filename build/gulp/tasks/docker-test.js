@@ -28,23 +28,50 @@ function askService(){
     ])
 }
 
+function askEnvironment(){
+    return inquirer.prompt([
+        {
+            type: 'list',
+            message: 'Select an environment to test',
+            name: 'env',
+            choices: [
+                {
+                    name: 'testDevelop'
+                },
+                {
+                    name: 'testProduction'
+                }
+            ]
+        }
+    ])
+}
+
 function getService(){
     // sometimes it's convenient to pass env as an arg
     const { service } = argv
     return service ? Promise.resolve({ service }) : askService()
 }
 
+function getEnvironment(){
+    // sometimes it's convenient to pass env as an arg
+    const { env } = argv
+    return env ? Promise.resolve({ env }) : askEnvironment()
+}
+
 module.exports = (gulp) => {
     return gulp.task('docker-test', (cb) => {
         return getService()
             .then(({service}) => {
+                return getEnvironment()
+                    .then(({ env }) => {
+                        return { service, env }
+                    })
+            })
+            .then(({ service, env }) => {
+
                 const commands = ['run','--rm', service, 'test']
 
-                dockerComposeUtil.exec(commands, 'test')
-            })
-            .then((result) => {
-
-
+                dockerComposeUtil.exec(commands, env)
 
             })
             .catch((err)=>{

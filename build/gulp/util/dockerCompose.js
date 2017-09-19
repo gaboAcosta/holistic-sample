@@ -49,10 +49,13 @@ const testCompose = 'docker-compose.test.yaml'
 
 const filesDictionary = {
     develop: [
-        mainCompose,
         devCompose,
     ],
-    test: [
+    testDevelop: [
+        devCompose,
+        testCompose,
+    ],
+    testProduction: [
         mainCompose,
         testCompose,
     ],

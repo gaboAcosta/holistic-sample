@@ -38,7 +38,7 @@ describe('Internal services tests', ()=>{
         }, (err, result) => {
 
             expect(err).to.be.null()
-            expect(result).to.be.equal({ response: 'Everything fine in the main service!' })
+            expect(result).to.be.equal({ response: 'Everything fine in the main service.' })
             done()
 
         })

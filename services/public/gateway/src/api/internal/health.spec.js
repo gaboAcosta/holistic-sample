@@ -32,7 +32,7 @@ describe('GET /api/health', ()=>{
 
     it('The health service responds', (done) => {
 
-        const text = 'Everything fine in the main service!'
+        const text = 'everything ok!'
 
         const responseMessage = {
             response: text
