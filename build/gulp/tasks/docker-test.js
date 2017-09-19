@@ -36,10 +36,10 @@ function askEnvironment(){
             name: 'env',
             choices: [
                 {
-                    name: 'testDevelop'
+                    name: 'develop'
                 },
                 {
-                    name: 'testProduction'
+                    name: 'production'
                 }
             ]
         }
@@ -71,7 +71,9 @@ module.exports = (gulp) => {
 
                 const commands = ['run','--rm', service, 'test']
 
-                dockerComposeUtil.exec(commands, env)
+                const environment = env.charAt(0).toUpperCase() + env.slice(1)
+                const targetEnv = `test${environment}`
+                dockerComposeUtil.exec(commands, targetEnv)
 
             })
             .catch((err)=>{

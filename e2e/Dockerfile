@@ -4,8 +4,6 @@
 
 FROM node:8-alpine
 
-MAINTAINER Sebastian Tschan <mail@blueimp.net>
-
 RUN apk --no-cache add \
     # Install tini, a tiny but valid init for containers:
     tini \
@@ -17,9 +15,5 @@ RUN apk --no-cache add \
     /root/.npm
 
 RUN npm install -g yarn
-
-WORKDIR /e2e
-COPY package.json ./
-RUN yarn install
 
 ENTRYPOINT ["yarn"]

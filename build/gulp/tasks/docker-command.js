@@ -46,28 +46,20 @@ function askCommand(){
 }
 
 module.exports = (gulp) => {
-    return gulp.task('docker-command', (cb) => {
+    return gulp.task('docker-command', () => {
         return askService()
             .then(({service}) => {
+                return dockerComposeUtil.getEnvironment()
+                    .then(({ env }) => { return { service, env } })
+            })
+            .then(({service, env}) => {
                 return askCommand()
-                    .then(({command}) => { return {service, command} })
+                    .then(({command}) => { return {service, env, command} })
             })
-            .then((result) => {
-
-                const { service } = result
-                const { command } = result
-
+            .then(({service, env, command}) => {
                 const dockerCommands = command.split(' ')
-
                 const commands = ['run' , service].concat(dockerCommands)
-
-                dockerComposeUtil.exec(commands, argv.env)
-
-            })
-            .catch((err)=>{
-                console.log('SOMETHING WENT WRONG!!!')
-                console.log(err)
-                cb(err)
+                return dockerComposeUtil.exec(commands, env)
             })
     });
 }
