@@ -6,14 +6,15 @@ mongoose.Promise = global.Promise
 
 
 let connectionAttempts = 0
-function connectAndRetry(){
+function connectAndRetry(server){
     connectionAttempts++
     const mongoURI = `${config.mongo.host}/${config.mongo.db}`
     const mongoOptions = config.mongo.options || {}
 
-    console.log('=======Connecting to mongoDB')
-    console.log('mongoURI', mongoURI)
-    console.log('mongoOptions', JSON.stringify(mongoOptions))
+    server.log(['info'], '=======Connecting to mongoDB')
+    server.log(['info'], `mongoURI, ${mongoURI}`)
+    server.log(['info'], `mongoURI, ${mongoURI}`)
+    server.log(['info'], `mongoOptions', ${JSON.stringify(mongoOptions)}`)
 
     mongoose.connect(mongoURI, mongoOptions)
         .catch(err => {
@@ -21,8 +22,8 @@ function connectAndRetry(){
                 console.log('Retrying connection to Mongo')           
                 setTimeout(connectAndRetry, 3000)
             } else if(err) {
-                console.log('Cannot connect to Mongo')
-                console.error(err)
+                server.log(['error'], 'Cannot connect to Mongo')
+                server.log(['error'], err)
                 process.exit(1)
             }
         })
@@ -31,7 +32,7 @@ function connectAndRetry(){
 const dbSetup = {
     register: (server, options, next) => {
         
-        connectAndRetry()
+        connectAndRetry(server)
 
         const db = {}
 
