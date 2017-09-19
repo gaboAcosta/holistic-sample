@@ -4,17 +4,15 @@ The only dependency for the host (there are internal dependencies) is:
 
 <a href="https://www.docker.com/community-edition" target="_blank">Docker CE</a>
 
-To run de project:
-
-First we initializa our Mongo volume to store our data
+To run the project we first initialize our MongoDB volume to store our data by running:
 
 `gulp init`
 
-Then we start our project
+Then we start our project:
 
 `gulp`
 
-If you add dependencies or change the package.json of any of the sub projects you need to stop and run the containers again so they are built again, this is because dependencies get installed only on build, also the package.json, webpack.config.js and others are copied at build time (look inside Dockerfile, anything there is on build time only)
+If you add dependencies, or change the package.json of any of the sub projects you need to stop, and run the containers again so they get built again. This is because dependencies get installed only on build, also the package.json, webpack.config.js, and others are copied at build time (look inside Dockerfile, anything there is on build time only)
 
 To test the project:
 
