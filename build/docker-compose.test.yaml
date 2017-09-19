@@ -23,13 +23,8 @@ services:
     environment:
       - NODE_ENV=test
   web:
-    build:
-      context: ../web
-      dockerfile: Dockerfile
-    depends_on:
-      - gateway
-    ports:
-      - '8080:80'
+    environment:
+      - NODE_ENV=test
   main:
     environment:
       - NODE_ENV=test
