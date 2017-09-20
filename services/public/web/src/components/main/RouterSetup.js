@@ -5,6 +5,7 @@ import history from '../../models/history'
 
 import App from './App'
 import UsersList from '../users/UsersList'
+import MoviesList from '../movies/MoviesList'
 import ThingsList from '../things/ThingsList'
 import Login from '../auth/Login'
 
@@ -13,6 +14,7 @@ const RouterSetup = () => (
         <div>
             <App>
                 <Route exact path="/" component={ThingsList} />
+                <Route exact path="/movies" component={MoviesList} />
                 <Route exact path="/admin/users" component={UsersList} />
                 <Route exact path="/login" component={Login} />
             </App>
