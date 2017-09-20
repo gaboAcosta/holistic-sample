@@ -1,7 +1,7 @@
 const Joi = require('joi')
 const Boom = require('boom')
 
-const addThingsRoute = {
+const addMoviesRoute = {
     register: function (server, options, next) {
         server.route({
             method: 'POST',
@@ -64,9 +64,9 @@ const addThingsRoute = {
     },
 };
 
-addThingsRoute.register.attributes = {
-    name: 'addThingsRoute',
+addMoviesRoute.register.attributes = {
+    name: 'addMoviesRoute',
     version: '1.0.0'
 };
 
-module.exports = addThingsRoute
+module.exports = addMoviesRoute
