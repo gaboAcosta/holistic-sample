@@ -60,7 +60,7 @@ class ThingsList extends Component {
         return (
             <div>
                 {this.displayModal()}
-                <Table celled>
+                <Table celled id="things-list">
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell>Name</Table.HeaderCell>
@@ -71,7 +71,10 @@ class ThingsList extends Component {
                         {
                             things.map((thing) => {
                                 return(
-                                    <Table.Row key={thing._id}>
+                                    <Table.Row
+                                        data-thing-name={thing.name}
+                                        key={thing._id}
+                                    >
                                         <Table.Cell>{thing.name}</Table.Cell>
                                         <Table.Cell>
                                             <Button

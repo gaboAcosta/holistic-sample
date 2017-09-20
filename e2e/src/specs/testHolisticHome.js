@@ -1,17 +1,38 @@
+
+const randomString = require('randomstring')
+
 module.exports = {
-    'Home Page': function(client) {
-        const homePage = client.page.homePage();
-        client.getLog( 'browser', function ( message ) {
-            console.log('=== Received log!! ===')
-            console.trace(message)
+    before(browser){
+        browser.getLog( 'browser', function ( message ) {
+            if(message.length > 0){
+                console.log('=== Received log!! ===')
+                console.trace(message)
+            }
         });
+    },
+    'Adding Things': function(browser) {
+        const homePage = browser.page.homePage();
+        const random = randomString.generate(5);
+        const thing = `Holistic Thing ${random}`;
+
         homePage
             .navigate()
+            .pause(300)
+            .addNewThing(thing)
+            .expectNewThing(thing);
 
-        client.pause(300)
+        browser.end();
+    },
+    'Canceling modal': function (browser) {
+        const homePage = browser.page.homePage();
 
-        homePage.addNewThing('Gabo Acosta');
+        homePage
+            .navigate()
+            .pause(300)
+            .openThingsModal()
+            .pause(300)
+            .click('@cancelThingButton')
+            .waitForElementNotPresent('@thingModal', 200)
 
-        client.end();
     }
 };

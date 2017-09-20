@@ -4,19 +4,25 @@ const homeCommands = {
         this.api.pause(time)
         return this
     },
-    addNewThing(thingName) {
-        return this
-            .waitForElementVisible('@addThingButton', 200)
-            .pause(1000)
-            .click('@addThingButton')
+    openThingsModal(){
+        return this.click('@addThingButton')
             .waitForElementVisible('@thingModal', 200)
-            .pause(1000)
-            .setValue('@thingNameInput', thingName)
-            .pause(1000)
-            .click('@confirmThingButton')
-            .pause(1000)
-            .waitForElementVisible('@addThingButton', 200)
-            .pause(1000)
+    },
+    addNewThing(thingName) {
+        return this .waitForElementVisible('@thingsList', 200)
+                    .pause(1000)
+                    .openThingsModal()
+                    .pause(1000)
+                    .setValue('@thingNameInput', thingName)
+                    .pause(1000)
+                    .click('@confirmThingButton')
+                    .pause(1000)
+                    .waitForElementVisible('@thingsList', 200)
+                    .pause(1000)
+    },
+    expectNewThing(thing) {
+        return this
+            .waitForElementVisible('tr[data-thing-name="'+ thing+'"]', 200)
     }
 };
 
@@ -38,6 +44,9 @@ module.exports = {
         },
         addThingButton: {
             selector: '#add-thing'
+        },
+        thingsList: {
+            selector: '#things-list'
         }
     }
 };
