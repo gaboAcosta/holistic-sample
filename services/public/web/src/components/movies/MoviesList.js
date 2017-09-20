@@ -29,7 +29,7 @@ class MoviesList extends Component {
         const { open } = this.store.modal
         const { target } = this.store.modal
         const { mode } = this.store.modal
-        const title = `${mode} a thing!`
+        const title = `${mode} a movie!`
         if(open) {
             return this.renderModal(target, mode, title)
         }
