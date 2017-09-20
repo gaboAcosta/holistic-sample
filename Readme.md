@@ -58,5 +58,24 @@ So that your dependencies are again on dev mode
 
 The test run will produce videos on `/e2e/src/videos`
 
+TUTORIAL
+
+Checkout the PR for the movie section to get a better idea of the flow to add things to your system:
+
+https://github.com/gaboAcosta/holistic-sample/pull/34
+
+https://github.com/gaboAcosta/holistic-sample/pull/35
+
+https://github.com/gaboAcosta/holistic-sample/pull/36
+
+https://github.com/gaboAcosta/holistic-sample/pull/37
+
+https://github.com/gaboAcosta/holistic-sample/pull/38
+
+
+Here you can see a PR with all the changes in one!
+
+https://github.com/gaboAcosta/holistic-sample/pull/39
+
 ## License
 Copyright Gabriel Acosta and other contributors 2017, Licensed under [MIT][].
