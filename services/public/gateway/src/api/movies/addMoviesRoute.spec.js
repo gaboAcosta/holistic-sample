@@ -133,7 +133,7 @@ describe('POST /api/movies', ()=>{
 
     });
 
-    it.only('It returns an error response if the service fails', (done) => {
+    it('It returns an error response if the service fails', (done) => {
 
         server.seneca.add({
             src: 'main',
