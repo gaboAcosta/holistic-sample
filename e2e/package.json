@@ -10,6 +10,7 @@
   "dependencies": {
     "nightwatch": "^0.9.16",
     "nightwatch-video-recorder": "1.1.0",
+    "randomstring": "^1.1.5",
     "wait-on": "^2.0.2"
   }
 }
