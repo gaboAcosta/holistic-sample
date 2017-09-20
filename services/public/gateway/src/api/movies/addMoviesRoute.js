@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const Boom = require('boom')
 
 const addThingsRoute = {
     register: function (server, options, next) {
@@ -19,18 +20,23 @@ const addThingsRoute = {
                         score,
                     }
 
-                    // Invoke a Seneca action using the request decoration
-                    request.seneca.act({
+                    // in case the service is down
+                    server.seneca.error(function(error){
+                        return reply(Boom.internal(error))
+                    })
+
+                    server.seneca.act({
                         src: 'main',
                         cmd: 'addMovie',
                         movie,
-                    }, (err, result) => {
+                    }, (err, { error, movie }) => {
 
-                        if (err) {
-                            return reply(err);
+                        // we dont handle the first error because we have our error handler on top
+                        if (error) {
+                            return reply(Boom.internal(error));
                         }
 
-                        return reply(result);
+                        return reply(movie);
                     });
                 },
                 response: {

@@ -42,8 +42,6 @@ describe('POST /api/movies', ()=>{
             score,
         }
 
-        // Always add this so that seneca won't eat your errors!
-        server.seneca.error(done)
         server.seneca.add({
             src: 'main',
             cmd: 'addMovie',
@@ -77,8 +75,6 @@ describe('POST /api/movies', ()=>{
             name,
         }
 
-        // Always add this so that seneca won't eat your errors!
-        server.seneca.error(done)
         server.seneca.add({
             src: 'main',
             cmd: 'addMovie',
@@ -99,6 +95,69 @@ describe('POST /api/movies', ()=>{
         }, ({ statusCode, result }) => {
             expect(statusCode).to.equal(200)
             expect(result).to.equal(expectedResult)
+            done()
+        })
+
+    });
+
+    it('It returns an error response if the service returns an error', (done) => {
+
+        server.seneca.add({
+            src: 'main',
+            cmd: 'addMovie',
+            movie: { required$: true },
+        }, ({ movie }, callback) => {
+
+            expect(movie).to.be.object()
+            const error = { message: 'Some internal error'}
+
+            return callback(null, { error })
+        })
+
+        server.inject({
+            method: 'POST',
+            url: '/api/movies',
+            payload: {
+                name,
+            },
+        }, ({ statusCode, result }) => {
+
+            const { error } = result
+            const { message } = result
+
+            expect(error).to.equal('Internal Server Error')
+            expect(message).to.equal('An internal server error occurred')
+            expect(statusCode).to.equal(500)
+            done()
+        })
+
+    });
+
+    it.only('It returns an error response if the service fails', (done) => {
+
+        server.seneca.add({
+            src: 'main',
+            cmd: 'addMovie',
+            movie: { required$: true },
+        }, (message, callback) => {
+
+            throw new Error('Woooww!!')
+        })
+
+        server.inject({
+            method: 'POST',
+            url: '/api/movies',
+            payload: {
+                name,
+            },
+        }, ({ statusCode, result }) => {
+
+            const { error } = result
+            const { message } = result
+
+            expect(error).to.equal('Internal Server Error')
+            expect(message).to.equal('An internal server error occurred')
+            expect(statusCode).to.equal(500)
             done()
         })
 
