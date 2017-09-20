@@ -69,6 +69,7 @@ https://github.com/gaboAcosta/holistic-sample/pull/37
 https://github.com/gaboAcosta/holistic-sample/pull/38
 
 Here you can see a PR with all the changes in one!
+
 https://github.com/gaboAcosta/holistic-sample/pull/39
 
 ## License
