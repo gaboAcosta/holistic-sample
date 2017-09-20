@@ -63,10 +63,15 @@ TUTORIAL
 Checkout the PR for the movie section to get a better idea of the flow to add things to your system:
 
 https://github.com/gaboAcosta/holistic-sample/pull/34
+
 https://github.com/gaboAcosta/holistic-sample/pull/35
+
 https://github.com/gaboAcosta/holistic-sample/pull/36
+
 https://github.com/gaboAcosta/holistic-sample/pull/37
+
 https://github.com/gaboAcosta/holistic-sample/pull/38
+
 
 Here you can see a PR with all the changes in one!
 
