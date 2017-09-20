@@ -50,7 +50,8 @@ describe('POST /api/movies', ()=>{
 
             expect(movie).to.be.object()
 
-            return callback(null, Object.assign({}, expectedResult))
+            const newMovie =  Object.assign({}, expectedResult)
+            return callback(null, { movie: newMovie })
         })
 
         server.inject({
@@ -83,7 +84,8 @@ describe('POST /api/movies', ()=>{
 
             expect(movie).to.be.object()
 
-            return callback(null, Object.assign({}, expectedResult))
+            const newMovie =  Object.assign({}, expectedResult)
+            return callback(null, { movie: newMovie })
         })
 
         server.inject({
