@@ -7,6 +7,7 @@ const deleteUserRoute = {
             method: 'DELETE',
             path: '/api/users/{id}',
             config: {
+                auth: 'jwt',
                 tags: ['api'],
                 description: 'Deletes User',
                 notes: 'Deletes user',
@@ -41,6 +42,9 @@ const deleteUserRoute = {
                     }),
                 },
                 validate: {
+                    headers: Joi.object().keys({
+                        authorization: Joi.string().optional(),
+                    }).unknown(),
                     params: {
                         id: Joi.string().required()
                     },

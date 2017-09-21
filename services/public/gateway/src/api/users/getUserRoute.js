@@ -7,6 +7,7 @@ const getUserRoute = {
             method: 'GET',
             path: '/api/users/{id}',
             config: {
+                auth: 'jwt',
                 tags: ['api'],
                 description: 'Get user',
                 notes: 'Get user',
@@ -42,6 +43,9 @@ const getUserRoute = {
                     }),
                 },
                 validate: {
+                    headers: Joi.object().keys({
+                        authorization: Joi.string().optional(),
+                    }).unknown(),
                     params: {
                         id: Joi.string().required()
                     }
