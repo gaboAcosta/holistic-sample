@@ -7,6 +7,7 @@ const updateUserRoute = {
             method: 'PUT',
             path: '/api/users/{id}',
             config: {
+                auth: 'jwt',
                 tags: ['api'],
                 description: 'Update Things',
                 notes: 'Update things',
@@ -47,6 +48,9 @@ const updateUserRoute = {
                     }),
                 },
                 validate: {
+                    headers: Joi.object().keys({
+                        authorization: Joi.string().optional(),
+                    }).unknown(),
                     params: {
                         id: Joi.string().required()
                     },

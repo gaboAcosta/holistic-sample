@@ -9,6 +9,7 @@ services:
     environment:
       - NODE_ENV=develop
     ports:
+      - '8000:8000'
       - '9230:9230'
     volumes:
       - ../services/private/main:/app_dev
@@ -21,6 +22,7 @@ services:
     environment:
       - NODE_ENV=develop
     ports:
+      - '4000:4000'
       - '9231:9231'
     volumes:
       - ../services/public/gateway:/app_dev

@@ -8,18 +8,13 @@ const scheme = (server, options) => {
 
             const req = request.raw.req;
             if(!req.headers.authorization) return reply(Boom.unauthorized('No auth headers sent'))
-            const parts = req.headers.authorization.split(' ')
-            const scheme = parts[0]
-            const token = parts[1]
-            if (scheme === 'Bearer:') {
-                return server.methods.validateJWT(token, (fatal, {error, user}) => {
-                    if(fatal)  return reply(fatal);
-                    if(error)  return reply(null, { error });
-                    return reply.continue({ credentials: { user } });
-                })
-            }
+            const token = req.headers.authorization
 
-            return reply(Boom.unauthorized('Only Bearer scheme accepted'))
+            return server.methods.validateJWT(token, (fatal, {error, user}) => {
+                if(fatal)  return reply(fatal);
+                if(error)  return reply(null, { error });
+                return reply.continue({ credentials: { user } });
+            })
         }
     };
 };

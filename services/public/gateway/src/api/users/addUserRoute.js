@@ -7,6 +7,7 @@ const addUserRoute = {
             method: 'POST',
             path: '/api/users',
             config: {
+                auth: 'jwt',
                 tags: ['api'],
                 description: 'Add User',
                 notes: 'Adds user',
@@ -24,14 +25,18 @@ const addUserRoute = {
                         name,
                         email,
                         password,
-                    }, (err, result) => {
+                    }, (fatal, { error, user }) => {
 
-                        if (err) {
+                        if (fatal) {
                             const error = err.toString()
                             return reply(Boom.internal(error))
                         }
 
-                        return reply(result);
+                        if(error){
+                            return reply(Boom.badRequest(error))
+                        }
+
+                        return reply(user);
                     });
                 },
                 response: {
@@ -46,6 +51,9 @@ const addUserRoute = {
                     }),
                 },
                 validate: {
+                    headers: Joi.object().keys({
+                        authorization: Joi.string().optional(),
+                    }).unknown(),
                     payload: Joi.object().keys({
                         name: Joi.string().required(),
                         email: Joi.string().required(),

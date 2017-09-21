@@ -13,7 +13,7 @@ const listUserRoute = {
                 notes: 'List users',
                 handler: function (request, reply) {
                     // Invoke a Seneca action using the request decoration
-
+                    console.log(request.headers)
                     request.seneca.act({
                         src: 'main',
                         service: 'user',
@@ -39,6 +39,11 @@ const listUserRoute = {
                         email: Joi.string().required(),
                     })),
                 },
+                validate: {
+                    headers: Joi.object().keys({
+                        authorization: Joi.string().optional(),
+                    }).unknown(),
+                }
             }
 
 

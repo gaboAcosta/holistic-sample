@@ -15,7 +15,7 @@ const unauthorizedRedirect = function(req) {
 const authHeaders = function(request){
     const token = localStorage.getItem('token')
     if(token) {
-        request.set('Authorization', 'Bearer: ' + token)
+        request.set('Authorization', token)
     }
 }
 
