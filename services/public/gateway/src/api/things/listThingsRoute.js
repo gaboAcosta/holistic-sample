@@ -12,7 +12,10 @@ const listThingsRoute = {
                 handler: function (request, reply) {
                     // Invoke a Seneca action using the request decoration
 
-                    request.seneca.act({
+                    const client = server.seneca.getClient()
+                    server.seneca.errorHandler(client, reply)
+
+                    client.act({
                         src: 'main',
                         cmd: 'listThings',
                     }, (err, result) => {

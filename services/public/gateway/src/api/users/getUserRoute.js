@@ -16,7 +16,10 @@ const getUserRoute = {
 
                     const { id } = request.params
 
-                    request.seneca.act({
+                    const client = server.seneca.getClient()
+                    server.seneca.errorHandler(client, reply)
+
+                    client.act({
                         src: 'main',
                         service: 'user',
                         cmd: 'get',

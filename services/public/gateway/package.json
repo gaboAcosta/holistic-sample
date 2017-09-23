@@ -24,6 +24,7 @@
   "scripts": {
     "start": "node index.js",
     "test": "NODE_ENV=test lab -P 'spec' src",
+    "test:dev": "NODE_ENV=test nodemon --inspect=0.0.0.0:9232 -w ./src node_modules/lab/bin/lab -P 'spec' --verbose src",
     "dev": "yarn install && nodemon --inspect=0.0.0.0:9231 -w ./src index.js"
   },
   "devDependencies": {

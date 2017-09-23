@@ -16,7 +16,10 @@ const loginRoute = {
                     const { email } = request.payload
                     const { password } = request.payload
 
-                    request.seneca.act({
+                    const client = server.seneca.getClient()
+                    server.seneca.errorHandler(client, reply)
+
+                    client.act({
                         src: 'main',
                         service: 'auth',
                         cmd: 'login',

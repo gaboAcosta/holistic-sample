@@ -1,6 +1,7 @@
 
 const ServerFactory = require('../../util/ServerFactory')
-const Chairo = require('chairo')
+const senecaSetup = require('../../util/senecaSetupTest')
+const senecaConstructor = require('seneca')
 const Code = require('code')
 const Lab = require('lab')
 
@@ -12,9 +13,7 @@ const expect = Code.expect
 
 const SUT = require('./listMoviesRoute')
 const plugins = [
-    {
-        register: Chairo
-    },
+    senecaSetup,
     SUT,
 ]
 
@@ -45,7 +44,10 @@ describe('GET /api/movies', ()=>{
 
     it('It returns all the movies on the database', (done) => {
 
-        server.seneca.add({
+        const client = senecaConstructor()
+        server.seneca.setClient(client)
+
+        client.add({
             src: 'main',
             cmd: 'listMovies',
         }, (message, callback) => {
@@ -66,7 +68,10 @@ describe('GET /api/movies', ()=>{
 
     it('It returns an error response if the service returns an error', (done) => {
 
-        server.seneca.add({
+        const client = senecaConstructor()
+        server.seneca.setClient(client)
+
+        client.add({
             src: 'main',
             cmd: 'listMovies',
         }, (message, callback) => {
@@ -87,6 +92,7 @@ describe('GET /api/movies', ()=>{
             expect(error).to.equal('Internal Server Error')
             expect(message).to.equal('An internal server error occurred')
             expect(statusCode).to.equal(500)
+            console.log('===== ERROR CORRECTLY HANDLED =====')
             done()
         })
 
@@ -94,7 +100,9 @@ describe('GET /api/movies', ()=>{
 
     it('It returns an error response if the service fails', (done) => {
 
-        server.seneca.add({
+        const client = senecaConstructor()
+        server.seneca.setClient(client)
+        client.add({
             src: 'main',
             cmd: 'listMovies',
         }, (message, callback) => {
@@ -113,6 +121,7 @@ describe('GET /api/movies', ()=>{
             expect(error).to.equal('Internal Server Error')
             expect(message).to.equal('An internal server error occurred')
             expect(statusCode).to.equal(500)
+            console.log('===== ERROR CORRECTLY HANDLED =====')
             done()
         })
 

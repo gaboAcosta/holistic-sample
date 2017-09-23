@@ -12,8 +12,12 @@ const listUserRoute = {
                 description: 'List Users',
                 notes: 'List users',
                 handler: function (request, reply) {
+
+                    const client = server.seneca.getClient()
+                    server.seneca.errorHandler(client, reply)
+
                     // Invoke a Seneca action using the request decoration
-                    request.seneca.act({
+                    client.act({
                         src: 'main',
                         service: 'user',
                         cmd: 'list',
