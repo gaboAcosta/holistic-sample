@@ -3,6 +3,7 @@ const Boom = require('boom')
 
 const addMoviesRoute = {
     register: function (server, options, next) {
+
         server.route({
             method: 'POST',
             path: '/api/movies',
@@ -20,12 +21,11 @@ const addMoviesRoute = {
                         score,
                     }
 
-                    // in case the service is down
-                    server.seneca.error(function(error){
-                        return reply(Boom.internal(error))
-                    })
 
-                    server.seneca.act({
+                    const client = server.seneca.getClient()
+                    server.seneca.errorHandler(client, reply)
+
+                    client.act({
                         src: 'main',
                         cmd: 'addMovie',
                         movie,
@@ -38,6 +38,7 @@ const addMoviesRoute = {
 
                         return reply(movie);
                     });
+
                 },
                 response: {
                     modify: true,

@@ -18,7 +18,10 @@ const updateUserRoute = {
                     const { name } = request.payload
                     const { email } = request.payload
                     const { password } = request.payload
-                    server.seneca.act({
+
+                    const client = server.seneca.getClient(reply)
+
+                    client.act({
                         src: 'main',
                         service: 'user',
                         cmd: 'update',

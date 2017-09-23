@@ -1,6 +1,7 @@
 
 const ServerFactory = require('../../util/ServerFactory')
-const Chairo = require('chairo')
+const senecaSetup = require('../../util/senecaSetupTest')
+const senecaConstructor = require('seneca')
 const Code = require('code')
 const Lab = require('lab')
 
@@ -12,9 +13,7 @@ const expect = Code.expect
 
 const SUT = require('./addMoviesRoute')
 const plugins = [
-    {
-        register: Chairo
-    },
+    senecaSetup,
     SUT,
 ]
 
@@ -42,7 +41,10 @@ describe('POST /api/movies', ()=>{
             score,
         }
 
-        server.seneca.add({
+        const client = senecaConstructor()
+        server.seneca.setClient(client)
+
+        client.add({
             src: 'main',
             cmd: 'addMovie',
             movie: { required$: true },
@@ -76,7 +78,10 @@ describe('POST /api/movies', ()=>{
             name,
         }
 
-        server.seneca.add({
+        const client = senecaConstructor()
+        server.seneca.setClient(client)
+
+        client.add({
             src: 'main',
             cmd: 'addMovie',
             movie: { required$: true },
@@ -104,7 +109,10 @@ describe('POST /api/movies', ()=>{
 
     it('It returns an error response if the service returns an error', (done) => {
 
-        server.seneca.add({
+        const client = senecaConstructor()
+        server.seneca.setClient(client)
+
+        client.add({
             src: 'main',
             cmd: 'addMovie',
             movie: { required$: true },
@@ -130,6 +138,7 @@ describe('POST /api/movies', ()=>{
             expect(error).to.equal('Internal Server Error')
             expect(message).to.equal('An internal server error occurred')
             expect(statusCode).to.equal(500)
+            console.log('===== ERROR CORRECTLY HANDLED =====')
             done()
         })
 
@@ -137,7 +146,10 @@ describe('POST /api/movies', ()=>{
 
     it('It returns an error response if the service fails', (done) => {
 
-        server.seneca.add({
+        const client = senecaConstructor()
+        server.seneca.setClient(client)
+
+        client.add({
             src: 'main',
             cmd: 'addMovie',
             movie: { required$: true },
@@ -160,6 +172,29 @@ describe('POST /api/movies', ()=>{
             expect(error).to.equal('Internal Server Error')
             expect(message).to.equal('An internal server error occurred')
             expect(statusCode).to.equal(500)
+            console.log('===== ERROR CORRECTLY HANDLED =====')
+            done()
+        })
+
+    });
+
+    it('It returns an error response if the service is not working', (done) => {
+
+        server.inject({
+            method: 'POST',
+            url: '/api/movies',
+            payload: {
+                name,
+            },
+        }, ({ statusCode, result }) => {
+
+            const { error } = result
+            const { message } = result
+
+            expect(error).to.equal('Internal Server Error')
+            expect(message).to.equal('An internal server error occurred')
+            expect(statusCode).to.equal(500)
+            console.log('===== ERROR CORRECTLY HANDLED =====')
             done()
         })
 

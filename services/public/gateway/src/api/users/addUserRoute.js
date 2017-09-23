@@ -18,7 +18,10 @@ const addUserRoute = {
                     const { email } = request.payload
                     const { password } = request.payload
 
-                    request.seneca.act({
+                    const client = server.seneca.getClient()
+                    server.seneca.errorHandler(client, reply)
+
+                    client.act({
                         src: 'main',
                         service: 'user',
                         cmd: 'add',

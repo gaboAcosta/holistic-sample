@@ -14,7 +14,10 @@ const deleteThingsRoute = {
 
                     const { id } = request.params
 
-                    request.seneca.act({
+                    const client = server.seneca.getClient()
+                    server.seneca.errorHandler(client, reply)
+
+                    client.act({
                         src: 'main',
                         cmd: 'deleteThings',
                         id,

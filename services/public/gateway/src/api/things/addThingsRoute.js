@@ -14,7 +14,10 @@ const addThingsRoute = {
 
                     const { name } = request.payload
 
-                    request.seneca.act({
+                    const client = server.seneca.getClient()
+                    server.seneca.errorHandler(client, reply)
+
+                    client.act({
                         src: 'main',
                         cmd: 'addThings',
                         name,

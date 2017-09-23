@@ -15,7 +15,10 @@ const updateThingsRoute = {
                     const { id } = request.params
                     const { name } = request.payload
 
-                    request.seneca.act({
+                    const client = server.seneca.getClient()
+                    server.seneca.errorHandler(client, reply)
+
+                    client.act({
                         src: 'main',
                         cmd: 'updateThings',
                         id,

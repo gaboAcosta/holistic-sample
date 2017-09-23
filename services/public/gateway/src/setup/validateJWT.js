@@ -4,12 +4,17 @@ const config = require('../config')
 const validateJWTMethod = {
     register: function (server, options, next) {
 
-        server.dependency('chairo')
+        server.dependency('senecaSetup')
         server.method({
             name: 'validateJWT',
             method: (token, cb) => {
 
-                return server.seneca.act({
+                const client = server.seneca.getClient()
+                server.seneca.errorHandler(client, (error) => {
+                    cb(error)
+                })
+
+                client.act({
                     src: 'main',
                     service: 'auth',
                     cmd: 'validateToken',

@@ -12,12 +12,10 @@ const listMoviesRoute = {
                 notes: 'List all the movies in the database',
                 handler: function (request, reply) {
 
-                    // in case the service is down
-                    server.seneca.error(function(error){
-                        return reply(Boom.internal(error))
-                    })
+                    const client = server.seneca.getClient()
+                    server.seneca.errorHandler(client, reply)
 
-                    server.seneca.act({
+                    client.act({
                         src: 'main',
                         cmd: 'listMovies',
                     }, (err, { error, movies }) => {
