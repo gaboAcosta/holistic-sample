@@ -19,7 +19,6 @@ const addUserRoute = {
                     const { password } = request.payload
 
                     const client = server.seneca.getClient()
-                    server.seneca.errorHandler(client, reply)
 
                     client.act({
                         src: 'main',
@@ -28,18 +27,19 @@ const addUserRoute = {
                         name,
                         email,
                         password,
-                    }, (fatal, { error, user }) => {
+                    }, (errAdd, response) => {
 
-                        if (fatal) {
-                            const error = err.toString()
-                            return reply(Boom.internal(error))
+                        if (errAdd) {
+                            const boomError = errAdd.isBoom ? errAdd : Boom.internal(errAdd)
+                            return reply(boomError);
                         }
 
-                        if(error){
-                            return reply(Boom.badRequest(error))
+                        if(!response){
+                            return reply(Boom.internal('No response received from service'))
                         }
 
-                        return reply(user);
+                        const { user } = response
+                        return reply(user)
                     });
                 },
                 response: {

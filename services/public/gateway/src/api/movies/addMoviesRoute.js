@@ -23,19 +23,22 @@ const addMoviesRoute = {
 
 
                     const client = server.seneca.getClient()
-                    server.seneca.errorHandler(client, reply)
-
                     client.act({
                         src: 'main',
                         cmd: 'addMovie',
                         movie,
-                    }, (err, { error, movie }) => {
+                    }, (errAdd, response) => {
 
-                        // we dont handle the first error because we have our error handler on top
-                        if (error) {
-                            return reply(Boom.internal(error));
+                        if (errAdd) {
+                            const boomError = errAdd.isBoom ? errAdd : Boom.internal(errAdd)
+                            return reply(boomError);
                         }
 
+                        if(!response){
+                            return reply(Boom.internal('No response received from service'))
+                        }
+
+                        const { movie } = response
                         return reply(movie);
                     });
 

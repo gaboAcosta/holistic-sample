@@ -1,14 +1,15 @@
 const Joi = require('joi')
+const Boom = require('boom')
 
-const updateThingsRoute = {
+const updateThingRoute = {
     register: function (server, options, next) {
         server.route({
             method: 'PUT',
             path: '/api/things/{id}',
             config: {
                 tags: ['api'],
-                description: 'Update Things',
-                notes: 'Update things',
+                description: 'Update Thing',
+                notes: 'Update thing',
                 handler: function (request, reply) {
                     // Invoke a Seneca action using the request decoration
 
@@ -16,20 +17,25 @@ const updateThingsRoute = {
                     const { name } = request.payload
 
                     const client = server.seneca.getClient()
-                    server.seneca.errorHandler(client, reply)
 
                     client.act({
                         src: 'main',
-                        cmd: 'updateThings',
+                        cmd: 'updateThing',
                         id,
                         name,
-                    }, (err, result) => {
+                    }, (errUpdate, response) => {
 
-                        if (err) {
-                            return reply(err);
+                        if (errUpdate) {
+                            const boomError = errUpdate.isBoom ? errUpdate : Boom.internal(errUpdate)
+                            return reply(boomError);
                         }
 
-                        return reply(result);
+                        if(!response){
+                            return reply(Boom.internal('No response received from service'))
+                        }
+
+                        const { thing } = response
+                        return reply(thing);
                     });
                 },
                 response: {
@@ -58,9 +64,9 @@ const updateThingsRoute = {
     },
 };
 
-updateThingsRoute.register.attributes = {
-    name: 'updateThingsRoute',
+updateThingRoute.register.attributes = {
+    name: 'updateThingRoute',
     version: '1.0.0'
 };
 
-module.exports = updateThingsRoute
+module.exports = updateThingRoute

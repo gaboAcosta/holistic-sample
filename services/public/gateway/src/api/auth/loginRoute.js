@@ -17,7 +17,6 @@ const loginRoute = {
                     const { password } = request.payload
 
                     const client = server.seneca.getClient()
-                    server.seneca.errorHandler(client, reply)
 
                     client.act({
                         src: 'main',
@@ -25,18 +24,19 @@ const loginRoute = {
                         cmd: 'login',
                         email,
                         password,
-                    }, (fatal, { error, user, token}) => {
+                    }, (errLogin, response) => {
 
-                        if (fatal) {
-                            return reply(Boom.internal(fatal))
+                        if (errLogin) {
+                            return reply(errLogin)
                         }
 
-                        if(error){
-                            const { payload } = error.output
-                            return reply(payload.message).code(payload.statusCode)
+                        if(!response){
+                            return reply(Boom.internal('No response received from service'))
                         }
 
-                        return reply({user, token});
+                        const { user, token} = response
+
+                        return reply({ user, token});
                     });
                 },
                 response: {

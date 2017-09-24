@@ -19,9 +19,8 @@ const validateJWTMethod = {
                     service: 'auth',
                     cmd: 'validateToken',
                     token,
-                }, (fatal, { error, user }) => {
-                    if(fatal)  return cb(fatal);
-                    if(error)  return cb(null, { error });
+                }, (errValidate, { user }) => {
+                    if(errValidate)  return cb(errValidate);
                     return cb(null, { user })
                 })
 

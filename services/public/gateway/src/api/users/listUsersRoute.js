@@ -14,21 +14,25 @@ const listUserRoute = {
                 handler: function (request, reply) {
 
                     const client = server.seneca.getClient()
-                    server.seneca.errorHandler(client, reply)
 
                     // Invoke a Seneca action using the request decoration
                     client.act({
                         src: 'main',
                         service: 'user',
                         cmd: 'list',
-                    }, (err, result) => {
+                    }, (errList, response) => {
 
-                        if (err) {
-                            const error = err.toString()
-                            return reply(Boom.internal(error))
+                        if (errList) {
+                            const boomError = errList.isBoom ? errList : Boom.internal(errList)
+                            return reply(boomError)
                         }
 
-                        return reply(result);
+                        if(!response){
+                            return reply(Boom.internal('No response received from service'))
+                        }
+
+                        const { users } = response
+                        return reply(users)
                     });
                 },
                 response: {

@@ -1,5 +1,6 @@
 
 const bcrypt = require('bcrypt')
+const Boom = require('boom')
 
 const loginMethod = {
     register: function (server, options, next) {
@@ -20,9 +21,11 @@ const loginMethod = {
                         cmd: 'validateUser',
                         email,
                         password,
-                    }, (fatal, { error, user }) => {
-                        if(fatal) reject(fatal)
-                        if(error) reject(error)
+                    }, (errValidate, message) => {
+                        if(errValidate) reject(errValidate)
+
+                        const { user } = message
+
                         resolve({ user })
                     })
                 })
@@ -35,9 +38,12 @@ const loginMethod = {
                         service: 'auth',
                         cmd: 'generateToken',
                         user,
-                    }, (fatal, { error, token }) => {
-                        if(fatal) reject(fatal)
-                        if(error) reject(error)
+                    }, (errGenerate, message) => {
+
+                        if(errGenerate) reject(errGenerate)
+
+                        const { token } = message
+
                         resolve({ user, token })
                     })
                 })
@@ -50,8 +56,8 @@ const loginMethod = {
             .then(({ user, token}) => {
                 done(null, { user, token })
             })
-            .catch((error) => {
-                done(null, { error })
+            .catch((errLogin) => {
+                done(Boom.internal(errLogin))
             })
 
         })

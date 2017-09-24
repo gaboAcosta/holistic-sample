@@ -13,18 +13,24 @@ const listThingsRoute = {
                     // Invoke a Seneca action using the request decoration
 
                     const client = server.seneca.getClient()
-                    server.seneca.errorHandler(client, reply)
 
                     client.act({
                         src: 'main',
                         cmd: 'listThings',
-                    }, (err, result) => {
+                    }, (errList, response) => {
 
-                        if (err) {
-                            return reply(err);
+                        if (errList) {
+                            const boomError = errList.isBoom ? errList : Boom.internal(errList)
+                            return reply(boomError)
                         }
 
-                        return reply(result);
+
+                        if(!response){
+                            return reply(Boom.internal('No response received from service'))
+                        }
+
+                        const { things } = response
+                        return reply(things);
                     });
                 },
                 response: {

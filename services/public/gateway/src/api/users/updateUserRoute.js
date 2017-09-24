@@ -9,17 +9,16 @@ const updateUserRoute = {
             config: {
                 auth: 'jwt',
                 tags: ['api'],
-                description: 'Update Things',
-                notes: 'Update things',
+                description: 'Update User',
+                notes: 'Update user',
                 handler: function (request, reply) {
-                    // Invoke a Seneca action using the request decoration
 
                     const { id } = request.params
                     const { name } = request.payload
                     const { email } = request.payload
                     const { password } = request.payload
 
-                    const client = server.seneca.getClient(reply)
+                    const client = server.seneca.getClient()
 
                     client.act({
                         src: 'main',
@@ -29,14 +28,19 @@ const updateUserRoute = {
                         name,
                         email,
                         password,
-                    }, (err, result) => {
+                    }, (errUpdate, response) => {
 
-                        if (err) {
-                            const error = err.toString()
-                            return reply(Boom.internal(error))
+                        if (errUpdate) {
+                            const boomError = errUpdate.isBoom ? errUpdate : Boom.internal(errUpdate)
+                            return reply(boomError);
                         }
 
-                        return reply(result);
+                        if(!response){
+                            return reply(Boom.internal('No response received from service'))
+                        }
+
+                        const { user } = response
+                        return reply(user)
                     });
                 },
                 response: {

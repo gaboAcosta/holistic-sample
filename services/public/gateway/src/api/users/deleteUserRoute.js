@@ -17,20 +17,24 @@ const deleteUserRoute = {
                     const { id } = request.params
 
                     const client = server.seneca.getClient()
-                    server.seneca.errorHandler(client, reply)
 
                     client.act({
                         src: 'main',
                         service: 'user',
                         cmd: 'delete',
                         id,
-                    }, (err, result) => {
+                    }, (errDelete, response) => {
 
-                        if (err) {
-                            const error = err.toString()
-                            return reply(Boom.internal(error))
+                        if (errDelete) {
+                            const boomError = errDelete.isBoom ? errDelete : Boom.internal(errDelete)
+                            return reply(boomError);
                         }
 
+                        if(!response){
+                            return reply(Boom.internal('No response received from service'))
+                        }
+
+                        const { result } = response
                         return reply(result);
                     });
                 },

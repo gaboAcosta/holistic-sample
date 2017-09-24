@@ -15,30 +15,23 @@ const validateUserMethod = {
             password: { required$: true },
         }, ({ email, password }, done) => {
 
-            server.db.Users.findOne({ email }, (err, user) => {
-                if(err){
-                    const error = Boom.badData(err.errmsg)
-                    return done(null, { error })
+            server.db.Users.findOne({ email }, (errFind, user) => {
+                if(errFind){
+                    return done(Boom.unauthorized('Invalid email/password'))
                 }
 
                 if(!user){
                     // I don't like to give details if it's an email or password error
                     // to make it harder for a brute force attack
-                    const error = Boom.unauthorized('Invalid email/password')
-                    return done(null, { error })
+                    return done(Boom.unauthorized('Invalid email/password'))
                 }
 
-                bcrypt.compare(password, user.password, (err, result) =>{
-                    if(err){
-                        const error = Boom.badData(err)
-                        return done(null, { error })
-                    }
-                    if(!result){
-                        const error = Boom.unauthorized('Invalid email/password')
-                        return done(null, { error })
+                bcrypt.compare(password, user.password, (errCompare, result) =>{
+                    if(errCompare || !result){
+                        return done(Boom.unauthorized('Invalid email/password'))
                     }
 
-                    return done(null, { user: user.toJSON() })
+                    return done(null, { user })
 
                 })
             })

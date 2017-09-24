@@ -17,10 +17,10 @@ class SenecaFactory {
         this.verbose = verbose
     }
 
-    getClient(reply){
-        const { env } = serverConfig
+    getClient(){
+
         const defaultConfig = {
-            log: 'silent',
+            log: 'info+,type:act',
         }
         const client = this.testing ? this.client :  senecaConstructor(defaultConfig)
         const host = serverConfig.mainServiceHost
@@ -38,15 +38,17 @@ class SenecaFactory {
                 })
         }
 
-        this.errorHandler(client, reply)
+        this.errorHandler(client)
 
         return client
     }
 
-    errorHandler(client, reply){
+    errorHandler(client){
+
         client.error(function(error){
+            console.log('====== Seneca service failed =====')
             console.log(error)
-            return reply(Boom.internal(error));
+            console.log('====== Seneca service failed =====')
         })
     }
 

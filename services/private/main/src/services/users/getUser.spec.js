@@ -48,6 +48,7 @@ describe('Get User method', ()=>{
             password: 'a very secret password'
         }
 
+        server.seneca.error(done)
         server.db.Users.create(newUser, (err, {_id}) => {
             server.seneca.act({
                 src: 'main',
@@ -56,9 +57,9 @@ describe('Get User method', ()=>{
                 id: _id,
             }, (err, result) => {
 
-                const foundUser = result
-                expect(foundUser.name).to.be.equal(newUser.name)
-                expect(foundUser.email).to.be.equal(newUser.email)
+                const { user } = result
+                expect(user.name).to.be.equal(newUser.name)
+                expect(user.email).to.be.equal(newUser.email)
                 done()
 
             })

@@ -1,4 +1,6 @@
 
+const Boom = require('boom')
+
 const listThingsMethod = {
     register: (server, options, next) => {
         server.dependency('chairo')
@@ -6,7 +8,13 @@ const listThingsMethod = {
             src: 'main',
             cmd: 'listThings',
         }, (message, done) => {
-           server.db.Things.find({}, done)
+           server.db.Things.find({}, (errFind, things) => {
+               if(errFind){
+                   return done(Boom.internal(errFind))
+               }
+
+               done(null, { things })
+           })
         })
 
         next()

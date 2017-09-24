@@ -1,4 +1,4 @@
-
+const errorHandling = require('../setup/errorHandling')
 const Hapi = require('hapi')
 
 class ServerFactory {
@@ -9,6 +9,8 @@ class ServerFactory {
             server.connection()
 
             server.register(plugins, (error) => {
+
+                errorHandling(server)
 
                 if(error){
                     return reject(error)

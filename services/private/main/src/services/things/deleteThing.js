@@ -1,15 +1,23 @@
 
+const Boom = require('boom')
+
 const deleteThingsMethod = {
     register: (server, options, next) => {
         server.dependency('chairo')
         server.seneca.add({
             src: 'main',
-            cmd: 'deleteThings',
+            cmd: 'deleteThing',
             id: { required$: true },
         }, (message, done) => {
             const { id } = message
             return server.db.Things.findOne({_id: id})
-                .remove(done)
+                .remove((errFind, result) => {
+                    if(errFind){
+                        return done(Boom.internal(errFind))
+                    }
+
+                    done(null, { result })
+                })
         })
 
         next()

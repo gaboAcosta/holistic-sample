@@ -1,21 +1,21 @@
 
 const Boom = require('boom')
 
-const addMovieMethod = {
+const addThingMethod = {
     register: (server, options, next) => {
         server.dependency('chairo')
         server.seneca.add({
             src: 'main',
-            cmd: 'addMovie',
-            movie: { required$: true },
+            cmd: 'addThing',
+            name: { required$: true },
         }, (message, done) => {
-
-            const { movie } = message
-            return server.db.Movies.create(movie, (errCreate, movie) => {
+            const { name } = message
+            server.db.Things.create({ name }, (errCreate, thing) => {
                 if(errCreate){
                     return done(Boom.internal(errCreate))
                 }
-                return done(null, { movie })
+
+                done(null, { thing })
             })
         })
 
@@ -23,9 +23,9 @@ const addMovieMethod = {
     }
 };
 
-addMovieMethod.register.attributes = {
-    name: 'addMovieMethod',
+addThingMethod.register.attributes = {
+    name: 'addThingMethod',
     version: '1.0.0'
 };
 
-module.exports = addMovieMethod
+module.exports = addThingMethod

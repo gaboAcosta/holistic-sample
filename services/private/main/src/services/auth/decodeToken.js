@@ -14,10 +14,9 @@ const decodeTokenMethod = {
             token: { required$: true },
         }, ({ token }, done) => {
 
-            jwt.verify(token, config.appSecret, function(err, user) {
-                if(err) {
-                    const error = Boom.internal(err)
-                    done(null, { error })
+            jwt.verify(token, config.appSecret, (errVerify, user) => {
+                if(errVerify) {
+                    done(Boom.internal(errVerify))
                 }
 
                 done(null, { user })
