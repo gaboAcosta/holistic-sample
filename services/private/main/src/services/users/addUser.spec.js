@@ -21,8 +21,7 @@ const plugins = [
         register: Chairo,
         options: {
             log: 'silent',
-            fixedargs: {fatal$:false},
-            default$: {message: 'All good!'}
+            fixedargs: {fatal$:false}
         },
     },
     db,
@@ -52,6 +51,12 @@ describe('Add User method', ()=>{
             email: 'test@example.com',
             password: 'a very secret password'
         }
+
+        // Always add this to handle any unexpected errors
+        server.seneca.error((error) => {
+            if(!error.isBoom) done(error)
+        })
+
         server.seneca.act({
             src: 'main',
             service: 'user',
@@ -81,9 +86,12 @@ describe('Add User method', ()=>{
             email: 'test@example.com',
             password: 'a very secret password'
         }
+
+        // Always add this to handle any unexpected errors
         server.seneca.error((error) => {
             if(!error.isBoom) done(error)
         })
+
         server.seneca.act({
             src: 'main',
             service: 'user',

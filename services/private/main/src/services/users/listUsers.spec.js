@@ -19,7 +19,11 @@ const expect = Code.expect
 
 const plugins = [
     {
-        register: Chairo
+        register: Chairo,
+        options: {
+            log: 'silent',
+            fixedargs: {fatal$:false}
+        },
     },
     db,
     SUT,
@@ -56,6 +60,10 @@ describe('List Users method', ()=>{
 
     it('lists the users from the db', (done) => {
 
+        // Always add this to handle any unexpected errors
+        server.seneca.error((error) => {
+            if(!error.isBoom) done(error)
+        })
 
 
         server.db.Users.create(mockUsers, (err, users) => {

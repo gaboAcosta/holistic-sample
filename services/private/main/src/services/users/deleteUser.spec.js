@@ -18,7 +18,11 @@ const expect = Code.expect
 
 const plugins = [
     {
-        register: Chairo
+        register: Chairo,
+        options: {
+            log: 'silent',
+            fixedargs: {fatal$:false}
+        },
     },
     db,
     SUT,
@@ -47,6 +51,11 @@ describe('Delete User method', ()=>{
             email: 'test@example.com',
             password: 'a very secret password'
         }
+
+        // Always add this to handle any unexpected errors
+        server.seneca.error((error) => {
+            if(!error.isBoom) done(error)
+        })
 
         server.db.Users.create(newUser, (err, {_id}) => {
             server.seneca.act({
