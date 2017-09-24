@@ -19,6 +19,10 @@ const expect = Code.expect
 const plugins = [
     {
         register: Chairo,
+        options: {
+            log: 'silent',
+            fixedargs: {fatal$:false}
+        },
     },
     db,
     SUT,
@@ -53,6 +57,11 @@ describe('Update User method', ()=>{
             email: 'updated@example.com',
             password: 'a very secret updated password'
         }
+
+        // Always add this to handle any unexpected errors
+        server.seneca.error((error) => {
+            if(!error.isBoom) done(error)
+        })
 
         server.db.Users.create(newUser, (err, {_id}) => {
             server.seneca.act({
