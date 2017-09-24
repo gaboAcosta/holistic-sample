@@ -5,7 +5,7 @@ class DatabaseHelper {
 
     static dropCollection(collection){
         return new Promise((resolve) => {
-            collection.drop(() => {
+            collection.remove({}, () => {
                 resolve()
             })
         })

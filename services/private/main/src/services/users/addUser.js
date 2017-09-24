@@ -16,15 +16,23 @@ const addUserMethod = {
             const newUser = {name, email, password}
 
             server.db.Users.create(newUser, (errCreate, user) => {
-                    if(errCreate){
-                        return done(Boom.internal(errCreate.errmsg))
-                    }
 
-                    if(!user){
-                        return done(Boom.notFound('user not found'))
-                    }
+                let boomError
+                if(errCreate && errCreate.code === 11000){
+                    boomError = Boom.conflict('User already exists')
+                } else if(errCreate) {
+                    boomError = Boom.internal(errCreate.errmsg)
+                }
 
-                    return done(null, { user })
+                if(boomError){
+                    return done(boomError)
+                }
+
+                if(!user){
+                    return done(Boom.notFound('user not found'))
+                }
+
+                return done(null, { user })
 
                 })
         })

@@ -18,7 +18,12 @@ const expect = Code.expect
 
 const plugins = [
     {
-        register: Chairo
+        register: Chairo,
+        options: {
+            log: 'silent',
+            fixedargs: {fatal$:false},
+            default$: {message: 'All good!'}
+        },
     },
     db,
     SUT,
@@ -69,6 +74,50 @@ describe('Add User method', ()=>{
         })
 
     });
+
+    it('Returns a 409 when the email is already in use', (done) => {
+        const newUser = {
+            name: 'An awesome user',
+            email: 'test@example.com',
+            password: 'a very secret password'
+        }
+        server.seneca.error((error) => {
+            if(!error.isBoom) done(error)
+        })
+        server.seneca.act({
+            src: 'main',
+            service: 'user',
+            cmd: 'add',
+            name: newUser.name,
+            email: newUser.email,
+            password: newUser.password,
+        }, (errFirst, resultFirst) => {
+
+            expect(errFirst).to.be.null()
+            expect(resultFirst).to.be.object()
+
+            server.seneca.act({
+                src: 'main',
+                service: 'user',
+                cmd: 'add',
+                name: newUser.name,
+                email: newUser.email,
+                password: newUser.password,
+            }, (errSecond, resultSecond) => {
+
+                expect(resultSecond).to.be.null()
+                expect(errSecond).to.be.object()
+                expect(errSecond.isBoom).to.be.true()
+
+                const { output } = errSecond
+
+                expect(output).to.be.object()
+                expect(output.statusCode).to.equal(409)
+
+                done()
+            })
+        })
+    })
 
     afterEach(() => {
         return DatabaseHelper.wipeCollections()
