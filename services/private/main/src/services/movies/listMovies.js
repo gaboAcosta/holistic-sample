@@ -1,4 +1,6 @@
 
+const Boom = require('boom')
+
 const listMoviesMethod = {
     register: (server, options, next) => {
         server.dependency('chairo')
@@ -7,17 +9,13 @@ const listMoviesMethod = {
             cmd: 'listMovies',
         }, (message, done) => {
 
-            return server.db.Movies.find({}, (error, movies) => {
-                if(error){
-                    return done(null, { error })
+            return server.db.Movies.find({}, (errFind, movies) => {
+                if(errFind){
+                    return done(Boom.internal(errFind))
                 }
                 return done(null, { movies })
             })
-            .catch((error) => {
-                return done(null, { error })
-            })
         })
-
         next()
     }
 }

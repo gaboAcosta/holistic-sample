@@ -15,18 +15,13 @@ const addUserMethod = {
 
             const newUser = {name, email, password}
 
-            server
-                .db
-                .Users
-                .create(newUser, (err, user) => {
-                    if(err){
-                        const error = Boom.badData(err.errmsg)
-                        return done(null, { error })
+            server.db.Users.create(newUser, (errCreate, user) => {
+                    if(errCreate){
+                        return done(Boom.internal(errCreate.errmsg))
                     }
 
                     if(!user){
-                        const error = Boom.notFound('user not found!')
-                        return done(null, { error })
+                        return done(Boom.notFound('user not found'))
                     }
 
                     return done(null, { user })

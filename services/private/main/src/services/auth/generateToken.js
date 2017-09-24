@@ -27,11 +27,10 @@ const generateTokenMethod = {
                 nbf: now,
             }
 
-            jwt.sign(payload, config.appSecret, (err, token) => {
+            jwt.sign(payload, config.appSecret, (errSign, token) => {
 
-                if(err) {
-                    const error = Boom.internal(err)
-                    done(null, { error })
+                if(errSign) {
+                    done(Boom.internal(errSign))
                 }
 
                 done(null, { token })

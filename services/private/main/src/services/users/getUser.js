@@ -1,4 +1,6 @@
 
+const Boom = require('boom')
+
 const getUserMethod = {
     register: (server, options, next) => {
         server.dependency('chairo')
@@ -8,7 +10,12 @@ const getUserMethod = {
             cmd: 'get',
             id: { required$: true },
         }, ({id}, done) => {
-           server.db.Users.findById(id, done)
+           server.db.Users.findById(id, (errFind, user) => {
+               if(errFind){
+                   return done(Boom.internal(errFind))
+               }
+               return done({ user })
+           })
         })
 
         next()

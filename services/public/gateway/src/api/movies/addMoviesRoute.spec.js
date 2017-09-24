@@ -4,6 +4,7 @@ const senecaSetup = require('../../util/senecaSetupTest')
 const senecaConstructor = require('seneca')
 const Code = require('code')
 const Lab = require('lab')
+const Boom = require('boom')
 
 const lab = exports.lab = Lab.script()
 const before = lab.before
@@ -112,6 +113,8 @@ describe('POST /api/movies', ()=>{
         const client = senecaConstructor()
         server.seneca.setClient(client)
 
+        const errorMessage = 'Some internal error'
+
         client.add({
             src: 'main',
             cmd: 'addMovie',
@@ -119,9 +122,7 @@ describe('POST /api/movies', ()=>{
         }, ({ movie }, callback) => {
 
             expect(movie).to.be.object()
-            const error = { message: 'Some internal error'}
-
-            return callback(null, { error })
+            return callback(Boom.notFound(errorMessage))
         })
 
         server.inject({
@@ -132,12 +133,8 @@ describe('POST /api/movies', ()=>{
             },
         }, ({ statusCode, result }) => {
 
-            const { error } = result
-            const { message } = result
-
-            expect(error).to.equal('Internal Server Error')
-            expect(message).to.equal('An internal server error occurred')
-            expect(statusCode).to.equal(500)
+            expect(result).to.equal(`seneca: Action cmd:addMovie,src:main failed: ${errorMessage}.`)
+            expect(statusCode).to.equal(404)
             console.log('===== ERROR CORRECTLY HANDLED =====')
             done()
         })
@@ -149,13 +146,15 @@ describe('POST /api/movies', ()=>{
         const client = senecaConstructor()
         server.seneca.setClient(client)
 
+        const errorMessage = 'Woooww!!'
+
         client.add({
             src: 'main',
             cmd: 'addMovie',
             movie: { required$: true },
         }, (message, callback) => {
 
-            throw new Error('Woooww!!')
+            throw new Error(errorMessage)
         })
 
         server.inject({
@@ -165,13 +164,9 @@ describe('POST /api/movies', ()=>{
                 name,
             },
         }, ({ statusCode, result }) => {
-
-            const { error } = result
-            const { message } = result
-
-            expect(error).to.equal('Internal Server Error')
-            expect(message).to.equal('An internal server error occurred')
+            expect(result).to.equal(`seneca: Action cmd:addMovie,src:main failed: ${errorMessage}.`)
             expect(statusCode).to.equal(500)
+
             console.log('===== ERROR CORRECTLY HANDLED =====')
             done()
         })
@@ -180,6 +175,9 @@ describe('POST /api/movies', ()=>{
 
     it('It returns an error response if the service is not working', (done) => {
 
+        const client = senecaConstructor()
+        server.seneca.setClient(client)
+
         server.inject({
             method: 'POST',
             url: '/api/movies',
@@ -188,11 +186,8 @@ describe('POST /api/movies', ()=>{
             },
         }, ({ statusCode, result }) => {
 
-            const { error } = result
-            const { message } = result
-
-            expect(error).to.equal('Internal Server Error')
-            expect(message).to.equal('An internal server error occurred')
+            const message = `seneca: No matching action pattern found for { src: 'main',  cmd: 'addMovie',  movie: { name: 'Star Wars', score: undefined } }, and no default result provided (using a default$ property).`
+            expect(result).to.equal(message)
             expect(statusCode).to.equal(500)
             console.log('===== ERROR CORRECTLY HANDLED =====')
             done()

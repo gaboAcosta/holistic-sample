@@ -1,4 +1,6 @@
 
+const Boom = require('boom')
+
 const deleteUserMethod = {
     register: (server, options, next) => {
         server.dependency('chairo')
@@ -9,7 +11,12 @@ const deleteUserMethod = {
             id: { required$: true },
         }, ({id}, done) => {
             return server.db.Users.findOne({_id: id})
-                .remove(done)
+                .remove((errFind, result) => {
+                    if(errFind){
+                        return done(Boom.internal(errFind))
+                    }
+                    return done(null, { result })
+                })
         })
 
         next()

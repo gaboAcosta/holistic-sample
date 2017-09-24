@@ -1,4 +1,6 @@
 
+const Boom = require('boom')
+
 const updateUserMethod = {
     register: (server, options, next) => {
         server.dependency('chairo')
@@ -9,15 +11,17 @@ const updateUserMethod = {
             id: { required$: true },
         }, ({id, name, email, password}, done) => {
 
-            return server.db.Users.findOne({_id: id}, (err, user) => {
-                if(err) return done(err)
-                if(!user) return done('Object not found')
-
+            return server.db.Users.findOne({_id: id}, (errFind, user) => {
+                if(errFind) return done(Boom.internal(errFind))
+                if(!user) return done(Boom.notFound('User not found'))
 
                 name && (user.name = name)
                 email && (user.email = email)
                 password && (user.password = password)
-                return user.save(done)
+                return user.save()
+            })
+            .then((user) => {
+                done({ user })
             })
         })
 

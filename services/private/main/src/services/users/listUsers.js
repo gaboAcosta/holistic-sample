@@ -1,4 +1,6 @@
 
+const Boom = require('boom')
+
 const listUsersMethod = {
     register: (server, options, next) => {
         server.dependency('chairo')
@@ -7,7 +9,12 @@ const listUsersMethod = {
             service: 'user',
             cmd: 'list',
         }, (message, done) => {
-           server.db.Users.find({}, done)
+           server.db.Users.find({}, (errFind, users) => {
+               if(errFind){
+                   return done(Boom.internal(errFind))
+               }
+               return done(null, { users })
+           })
         })
 
         next()

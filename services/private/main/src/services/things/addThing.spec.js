@@ -5,7 +5,7 @@ const Chairo = require('chairo')
 
 const ServerFactory = require('../../util/test/ServerFactory')
 const DatabaseHelper = require('../../util/test/DatabaseHelper')
-const SUT = require('./addThings')
+const SUT = require('./addThing')
 const db = require('../../setup/db')
 
 const lab = exports.lab = Lab.script()
@@ -45,14 +45,17 @@ describe('Add Things method', ()=>{
         const newThing = {
             name: 'An awesome thing'
         }
+        server.seneca.error(done)
         server.seneca.act({
             src: 'main',
-            cmd: 'addThings',
+            cmd: 'addThing',
             name: newThing.name,
         }, (err, result) => {
 
             expect(err).to.be.null()
-            const { _id } = result
+
+            const { thing } = result
+            const { _id } = thing
 
             server.db.Things.findById(_id)
                 .then((foundThing) => {

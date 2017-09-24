@@ -68,7 +68,7 @@ describe('List Users method', ()=>{
                 cmd: 'list'
             }, (err, result) => {
 
-                const users = result
+                const { users } = result
 
                 users.map((user) => {
                     const originalUser = _.first(mockUsers.filter(u=>u.email === user.email))

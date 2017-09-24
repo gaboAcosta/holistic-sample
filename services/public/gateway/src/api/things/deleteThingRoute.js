@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const Boom = require('boom')
 
 const deleteThingsRoute = {
     register: function (server, options, next) {
@@ -7,26 +8,31 @@ const deleteThingsRoute = {
             path: '/api/things/{id}',
             config: {
                 tags: ['api'],
-                description: 'Deletes Things',
-                notes: 'Deletes things',
+                description: 'Deletes Thing',
+                notes: 'Deletes thing',
                 handler: function (request, reply) {
                     // Invoke a Seneca action using the request decoration
 
                     const { id } = request.params
 
                     const client = server.seneca.getClient()
-                    server.seneca.errorHandler(client, reply)
 
                     client.act({
                         src: 'main',
-                        cmd: 'deleteThings',
+                        cmd: 'deleteThing',
                         id,
-                    }, (err, result) => {
+                    }, (errDelete, response) => {
 
-                        if (err) {
-                            return reply(err);
+                        if (errDelete) {
+                            const boomError = errDelete.isBoom ? errDelete : Boom.internal(errDelete)
+                            return reply(boomError);
                         }
 
+                        if(!response){
+                            return reply(Boom.internal('No response received from service'))
+                        }
+
+                        const { result } = response
                         return reply(result);
                     });
                 },

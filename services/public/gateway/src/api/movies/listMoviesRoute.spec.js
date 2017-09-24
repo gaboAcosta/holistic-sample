@@ -4,6 +4,7 @@ const senecaSetup = require('../../util/senecaSetupTest')
 const senecaConstructor = require('seneca')
 const Code = require('code')
 const Lab = require('lab')
+const Boom = require('boom')
 
 const lab = exports.lab = Lab.script()
 const before = lab.before
@@ -71,14 +72,14 @@ describe('GET /api/movies', ()=>{
         const client = senecaConstructor()
         server.seneca.setClient(client)
 
+        const errorMessage = 'Some internal error'
+
         client.add({
             src: 'main',
             cmd: 'listMovies',
         }, (message, callback) => {
 
-            const error = { message: 'Some internal error'}
-
-            return callback(null, { error })
+            return callback(Boom.internal(errorMessage))
         })
 
         server.inject({
@@ -86,11 +87,7 @@ describe('GET /api/movies', ()=>{
             url: '/api/movies',
         }, ({ statusCode, result }) => {
 
-            const { error } = result
-            const { message } = result
-
-            expect(error).to.equal('Internal Server Error')
-            expect(message).to.equal('An internal server error occurred')
+            expect(result).to.equal(`seneca: Action cmd:listMovies,src:main failed: ${errorMessage}.`)
             expect(statusCode).to.equal(500)
             console.log('===== ERROR CORRECTLY HANDLED =====')
             done()
@@ -102,12 +99,15 @@ describe('GET /api/movies', ()=>{
 
         const client = senecaConstructor()
         server.seneca.setClient(client)
+
+        const errorMessage = 'Woooww!!'
+
         client.add({
             src: 'main',
             cmd: 'listMovies',
         }, (message, callback) => {
 
-            throw new Error('Woooww!!')
+            throw new Error(errorMessage)
         })
 
         server.inject({
@@ -115,13 +115,12 @@ describe('GET /api/movies', ()=>{
             url: '/api/movies',
         }, ({ statusCode, result }) => {
 
-            const { error } = result
-            const { message } = result
-
-            expect(error).to.equal('Internal Server Error')
-            expect(message).to.equal('An internal server error occurred')
-            expect(statusCode).to.equal(500)
             console.log('===== ERROR CORRECTLY HANDLED =====')
+            console.log(result)
+            const expected = `seneca: Action cmd:listMovies,src:main failed: ${errorMessage}.`
+            expect(result).to.equal(expected)
+            expect(statusCode).to.equal(500)
+
             done()
         })
 

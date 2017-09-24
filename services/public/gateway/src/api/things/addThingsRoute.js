@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const Boom = require('boom')
 
 const addThingsRoute = {
     register: function (server, options, next) {
@@ -15,19 +16,25 @@ const addThingsRoute = {
                     const { name } = request.payload
 
                     const client = server.seneca.getClient()
-                    server.seneca.errorHandler(client, reply)
 
                     client.act({
                         src: 'main',
-                        cmd: 'addThings',
+                        cmd: 'addThing',
                         name,
-                    }, (err, result) => {
+                    }, (errAdd, response) => {
 
-                        if (err) {
-                            return reply(err);
+                        if (errAdd) {
+                            const boomError = errAdd.isBoom ? errAdd : Boom.internal(errAdd)
+                            return reply(boomError);
                         }
 
-                        return reply(result);
+
+                        if(!response){
+                            return reply(Boom.internal('No response received from service'))
+                        }
+
+                        const { thing } = response
+                        return reply(thing);
                     });
                 },
                 response: {

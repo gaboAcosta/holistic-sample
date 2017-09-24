@@ -12,8 +12,10 @@ module.exports = (server)=>{
 
             return reply.continue()
 
-        } else if(env === 'develop'){
+        } else if(env !== 'production'){
 
+            console.log('==== HANDLING ERROR ====')
+            console.log(response)
             const error = response.message
             const { statusCode } = response.output
             return reply(error).code(statusCode)

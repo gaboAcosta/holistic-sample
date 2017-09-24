@@ -17,21 +17,25 @@ const getUserRoute = {
                     const { id } = request.params
 
                     const client = server.seneca.getClient()
-                    server.seneca.errorHandler(client, reply)
 
                     client.act({
                         src: 'main',
                         service: 'user',
                         cmd: 'get',
                         id,
-                    }, (err, result) => {
+                    }, (errGet, response) => {
 
-                        if (err) {
-                            const error = err.toString()
-                            return reply(Boom.internal(error))
+                        if (errGet) {
+                            const boomError = errGet.isBoom ? errGet : Boom.internal(errGet)
+                            return reply(boomError);
                         }
 
-                        return reply(result);
+                        if(!response){
+                            return reply(Boom.internal('No response received from service'))
+                        }
+
+                        const { user } = response
+                        return reply(user)
                     });
                 },
                 response: {
