@@ -5,7 +5,8 @@ const Boom = require('boom')
 
 class SenecaFactory {
 
-    constructor(testing=false){
+    constructor(server, testing=false){
+        this.server = server
         this.testing = testing
     }
 
@@ -21,6 +22,7 @@ class SenecaFactory {
 
         const defaultConfig = {
             log: 'info+,type:act',
+            fixedargs: {fatal$:false},
         }
         const client = this.testing ? this.client :  senecaConstructor(defaultConfig)
         const host = serverConfig.mainServiceHost
@@ -38,18 +40,7 @@ class SenecaFactory {
                 })
         }
 
-        this.errorHandler(client)
-
         return client
-    }
-
-    errorHandler(client){
-
-        client.error(function(error){
-            console.log('====== Seneca service failed =====')
-            console.log(error)
-            console.log('====== Seneca service failed =====')
-        })
     }
 
 }

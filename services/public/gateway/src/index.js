@@ -6,7 +6,7 @@ const Hoek = require('hoek');
 
 const server = new Hapi.Server()
 const senecaSetup = require('./setup/senecaSetup')
-const jwtSchemeSetup = require('./setup/jwtScheme')
+const jwtSchemeSetup = require('./setup/jwtScheme') 
 const validateJWTSetup = require('./setup/validateJWT')
 const HapiSwagger = require('./setup/hapiSwagger')
 

@@ -41,8 +41,7 @@ const mainPlugins = [
         register: Chairo,
         options: {
             log: 'info+,type:act',
-            fixedargs: {fatal$:false},
-            default$: {message: 'All good!'}
+            fixedargs: {fatal$:false}
         },
     },
     healthRoute
@@ -58,11 +57,17 @@ server.register(plugins, (errorRegister) => {
 
     return server.start(() => {
 
+        server.seneca.error((error) => {
+            server.log(['error'], '==== SERVICE FAILED ===')
+            server.log(['error'], error)
+            server.log(['error'], '==== SERVICE FAILED ===')
+        })
+
         server.seneca.listen({
             type: 'http',
             port: 8000,
             pin: 'main',
-            timeout: 5000,
+            timeout: 5000
         })
 
         server.log(['info'], `Seneca client running at: ${server.info.host}`)

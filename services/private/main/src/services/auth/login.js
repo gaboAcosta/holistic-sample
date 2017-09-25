@@ -22,7 +22,7 @@ const loginMethod = {
                         email,
                         password,
                     }, (errValidate, message) => {
-                        if(errValidate) reject(errValidate)
+                        if(errValidate) return reject(errValidate)
 
                         const { user } = message
 
@@ -40,7 +40,7 @@ const loginMethod = {
                         user,
                     }, (errGenerate, message) => {
 
-                        if(errGenerate) reject(errGenerate)
+                        if(errGenerate) return reject(errGenerate)
 
                         const { token } = message
 
@@ -57,7 +57,8 @@ const loginMethod = {
                 done(null, { user, token })
             })
             .catch((errLogin) => {
-                done(Boom.internal(errLogin))
+                const boomError = errLogin.isBoom ? errLogin : Boom.internal(errLogin)
+                done(boomError)
             })
 
         })
