@@ -6,7 +6,7 @@ module.exports = (gulp) => {
     return gulp.task('docker-down', () => {
         return dockerComposeUtil.getEnvironment()
             .then(({ env }) => {
-                const commands = ['down']
+                const commands = ['down', '--remove-orphans']
                 return dockerComposeUtil.exec(commands, env)
             })
     });
