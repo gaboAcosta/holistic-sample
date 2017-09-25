@@ -4,7 +4,7 @@ const SenecaFactory = require('../util/SenecaFactory')
 
 const senecaSetup = {
     register: (server, options, next) => {
-        server.decorate('server','seneca', new SenecaFactory(true))
+        server.decorate('server','seneca', new SenecaFactory(server, true))
         next()
     }
 };

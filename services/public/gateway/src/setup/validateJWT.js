@@ -10,9 +10,6 @@ const validateJWTMethod = {
             method: (token, cb) => {
 
                 const client = server.seneca.getClient()
-                server.seneca.errorHandler(client, (error) => {
-                    cb(error)
-                })
 
                 client.act({
                     src: 'main',

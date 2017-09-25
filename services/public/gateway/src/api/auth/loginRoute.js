@@ -11,7 +11,6 @@ const loginRoute = {
                 description: 'Login Route',
                 notes: 'Login Route',
                 handler: function (request, reply) {
-                    // Invoke a Seneca action using the request decoration
 
                     const { email } = request.payload
                     const { password } = request.payload
