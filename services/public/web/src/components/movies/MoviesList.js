@@ -65,6 +65,7 @@ class MoviesList extends Component {
                         <Table.Row>
                             <Table.HeaderCell>Name</Table.HeaderCell>
                             <Table.HeaderCell>Score</Table.HeaderCell>
+                            <Table.HeaderCell>Actions</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
@@ -77,6 +78,23 @@ class MoviesList extends Component {
                                     >
                                         <Table.Cell>{movie.name}</Table.Cell>
                                         <Table.Cell>{movie.score}</Table.Cell>
+                                        <Table.Cell>
+                                            <Button
+                                                floated='right'
+                                                icon
+                                                onClick={()=>{this.openModal('update', movie)}}
+                                            >
+                                                <Icon name='write' id="edit-movie" /> Edit
+                                            </Button>
+
+                                            <Button
+                                                floated='right'
+                                                icon
+                                                onClick={()=>{this.openModal('delete', movie)}}
+                                            >
+                                                <Icon name='trash' id="delete-movie" /> Delete
+                                            </Button>
+                                        </Table.Cell>
                                     </Table.Row>
                                 )
                             })
@@ -84,7 +102,7 @@ class MoviesList extends Component {
                     </Table.Body>
                     <Table.Footer fullWidth>
                         <Table.Row>
-                            <Table.HeaderCell colSpan='2'>
+                            <Table.HeaderCell colSpan='3'>
                                 <Button
                                     floated='right'
                                     id="add-movie"
