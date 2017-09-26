@@ -4,14 +4,6 @@ Before running you must have the following dependencies
 
 <a href="https://www.docker.com/community-edition" target="_blank">Docker CE</a>
 
-You also need to update your docker-compose version to be able to use the 2.3 syntax
-
-To do so, download the latest binary from this page:
-
-<a href="https://github.com/docker/compose/releases" target="_blank">Docker Compose Releases</a>
-
-Stop docker and replace the docker compose binary.
-
 You will also need to install gulp as a global package
 
 `npm install --g gulp`
