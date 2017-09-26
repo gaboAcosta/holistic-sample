@@ -1,9 +1,6 @@
-version: '2.3'
+version: '2'
 services:
   main:
-    build:
-      context: ../services/private/main
-      dockerfile: Dockerfile
     working_dir: /app_dev
     command: 'dev'
     environment:
@@ -11,29 +8,21 @@ services:
     ports:
       - '8000:8000'
       - '9230:9230'
+      - '9231:9231'
     volumes:
       - ../services/private/main:/app_dev
   gateway:
-    build:
-      context: ../services/public/gateway
-      dockerfile: Dockerfile
     working_dir: /app_dev
     command: 'dev'
     environment:
       - NODE_ENV=develop
     ports:
       - '4000:4000'
-      - '9231:9231'
+      - '9232:9232'
+      - '9233:9233'
     volumes:
       - ../services/public/gateway:/app_dev
-    depends_on:
-      - mongo
-      - main
   web:
-    build:
-      context: ../services/public/web
-      dockerfile: Dockerfile
-      target: builder
     working_dir: /app_dev
     entrypoint: 'yarn'
     command: 'dev'
@@ -43,15 +32,3 @@ services:
       - ../services/public/web:/app_dev
     ports:
       - '8080:8080'
-    depends_on:
-      - gateway
-  mongo:
-    image: mongo:2.6.12
-    volumes:
-      - holistic_mongo:/data/db
-    ports:
-      - '27017:27017'
-
-volumes:
-  holistic_mongo:
-    external: true

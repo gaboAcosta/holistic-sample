@@ -52,24 +52,29 @@ const executeCommand = (commands=[], dockerFiles=[]) => {
 
 }
 
-const mainCompose = 'docker-compose.yaml'
+const baseCompose = 'docker-compose.base.yaml'
+const productionCompose = 'docker-compose.production.yaml'
 const devCompose = 'docker-compose.local.yaml'
 const testCompose = 'docker-compose.test.yaml'
 
 const filesDictionary = {
     develop: [
+        baseCompose,
         devCompose,
     ],
     testDevelop: [
+        baseCompose,
         devCompose,
         testCompose,
     ],
     testProduction: [
-        mainCompose,
+        baseCompose,
+        productionCompose,
         testCompose,
     ],
     production: [
-        mainCompose
+        baseCompose,
+        productionCompose
     ]
 }
 

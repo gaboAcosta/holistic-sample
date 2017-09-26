@@ -40,6 +40,14 @@ class SenecaFactory {
                 })
         }
 
+        client.error((error) => {
+            if(!error.isBoom){
+                console.log('===== UNEXPECTED ERROR IN SENECA SERVICE =====')
+                console.log(error)
+                console.log('===== UNEXPECTED ERROR IN SENECA SERVICE =====')
+            }
+        })
+
         return client
     }
 

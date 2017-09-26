@@ -1,34 +1,21 @@
-version: '2.3'
+version: '2'
 services:
   main:
     build:
       context: ../services/private/main
       dockerfile: Dockerfile
-    environment:
-      - MONGO_HOST=
-    ports:
-      - '8000:8000'
-      - '3000:3000'
     depends_on:
       - mongo
   gateway:
     build:
       context: ../services/public/gateway
       dockerfile: Dockerfile
-    environment:
-      - MAIN_HOST=
-    ports:
-      - '4000:4000'
     depends_on:
-      - mongo
       - main
   web:
     build:
       context: ../services/public/web
       dockerfile: Dockerfile
-      target: server
-    ports:
-      - '8080:80'
     depends_on:
       - gateway
   mongo:
