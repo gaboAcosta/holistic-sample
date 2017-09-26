@@ -10,9 +10,9 @@ const scheme = (server, options) => {
             if(!req.headers.authorization) return reply(Boom.unauthorized('No auth headers sent'))
             const token = req.headers.authorization
 
-            return server.methods.validateJWT(token, (fatal, {error, user}) => {
-                if(fatal)  return reply(fatal);
-                if(error)  return reply(null, { error });
+            return server.methods.validateJWT(token, (error, result) => {
+                if(error)  return reply(error);
+                const { user } = result
                 return reply.continue({ credentials: { user } });
             })
         }

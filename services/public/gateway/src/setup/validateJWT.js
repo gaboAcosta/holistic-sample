@@ -1,5 +1,6 @@
 
 const config = require('../config')
+const Boom = require('boom')
 
 const validateJWTMethod = {
     register: function (server, options, next) {
@@ -10,14 +11,20 @@ const validateJWTMethod = {
             method: (token, cb) => {
 
                 const client = server.seneca.getClient()
-
                 client.act({
                     src: 'main',
                     service: 'auth',
                     cmd: 'validateToken',
                     token,
-                }, (errValidate, { user }) => {
-                    if(errValidate)  return cb(errValidate);
+                }, (errValidate, response) => {
+                    if(errValidate){
+                        const boomError = errValidate.isBoom ? errValidate : Boom.internal(errValidate)
+                        return cb(boomError)
+                    }
+
+                    if(!response) return cb(Boom.internal('No response received'))
+
+                    const { user } = response
                     return cb(null, { user })
                 })
 
